@@ -1,8 +1,9 @@
 import React from 'react';
+import '../scss/Chat.scss';
 
 const Chat = () => {
 	return (
-		<div>
+		<div className="chat">
 			<ul>
 				<li>Message</li>
 			</ul>

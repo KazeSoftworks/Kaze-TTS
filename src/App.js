@@ -20,14 +20,12 @@ function App() {
 			return;
 		}
 		dispatch(messagesSlice.actions.addMessage({ tags, message }));
-		console.log('added: ', tags, message);
 	});
 
 	client.on(
 		'messagedeleted',
 		(channel, username, deletedMessage, userstate) => {
 			dispatch(messagesSlice.actions.deleteMessage({ userstate }));
-			console.log('deleted: ', channel, username, deletedMessage, userstate);
 		}
 	);
 
