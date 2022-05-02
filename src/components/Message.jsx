@@ -1,12 +1,11 @@
 import React from 'react';
 
-const Message = () => {
-	const author = 'Author';
-	const message = 'Hello World!';
+const Message = ({ id, message, author }) => {
 	return (
-		<div>
-			{author}: {message}
-		</div>
+		<li key={id}>
+			<span className="author">{author}: </span>
+			<span className="message">{message}</span>
+		</li>
 	);
 };
 
