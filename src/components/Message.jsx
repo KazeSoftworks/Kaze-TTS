@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Message = ({ id, message, author }) => {
+const Message = ({ message, author }) => {
 	return (
-		<li key={id}>
+		<li>
 			<span className="author">{author}: </span>
 			<span className="message">{message}</span>
 		</li>

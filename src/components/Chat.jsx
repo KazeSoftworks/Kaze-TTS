@@ -11,7 +11,7 @@ const Chat = () => {
 			<ul>
 				{messagesList.map((message) => (
 					<Message
-						id={message.tags.id}
+						key={message.tags.id}
 						author={message.tags['display-name']}
 						message={message.message}
 					/>
