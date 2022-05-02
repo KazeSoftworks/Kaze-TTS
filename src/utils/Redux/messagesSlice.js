@@ -16,7 +16,7 @@ export const messagesSlice = createSlice({
 		deleteMessage: (state, action) => {
 			const removeIndex = state.messages
 				.map((item) => item.tags.id)
-				.indexOf(action.payload['target-msg-id']);
+				.indexOf(action.payload.userstate['target-msg-id']);
 			state.messages.splice(removeIndex, 1);
 		},
 	},
