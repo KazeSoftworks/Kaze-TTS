@@ -7,6 +7,7 @@ import { client } from './utils/Twitch/chat';
 import { useDispatch } from 'react-redux';
 import { messagesSlice } from './utils/Redux/messagesSlice';
 import Chat from './components/Chat';
+import { AUTH_URI } from './utils/constants';
 
 function App() {
 	const dispatch = useDispatch();
@@ -34,6 +35,11 @@ function App() {
 			<Layout>
 				<Header />
 				<Chat />
+				<button
+					onClick={() => window.open(AUTH_URI, '_self', 'width=600,height=500')}
+				>
+					Login
+				</button>
 			</Layout>
 		</div>
 	);
