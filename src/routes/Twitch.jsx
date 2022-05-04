@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AUTH_URI, VALIDATE_URI } from '../utils/constants';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setAuth } from '../utils/Redux/authSlice';
 
 const Twitch = () => {
 	const [error, setError] = React.useState(null);
+	const dispatch = useDispatch();
 	const location = useLocation();
+	let navigate = useNavigate();
 	const { search, hash } = location;
 
 	const getQuery = (search) => {
@@ -37,12 +41,20 @@ const Twitch = () => {
 				})
 				.then((res) => {
 					console.log(res.data);
+					dispatch(
+						setAuth({
+							token: getQuery(hash).access_token,
+							userId: res.data.user_id,
+							username: res.data.login,
+						})
+					);
+					navigate('/');
 				})
 				.catch((err) => {
 					console.log('Error: ', err);
 				});
 		}
-	}, [hash]);
+	}, [hash, navigate, dispatch]);
 
 	return (
 		<div>
