@@ -12,11 +12,19 @@ const authMiddleware = (store) => (next) => (action) => {
 	return result;
 };
 
+const reHydrateStore = () => {
+	if (localStorage.getItem('auth') !== null) {
+		const data = JSON.parse(localStorage.getItem('auth'));
+		return { auth: data };
+	}
+};
+
 const store = configureStore({
 	reducer: {
 		messages: messagesReducer,
 		auth: authReducer,
 	},
+	preloadedState: reHydrateStore(),
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(logger).concat(authMiddleware),
 });
