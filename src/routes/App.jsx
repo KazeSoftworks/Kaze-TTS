@@ -35,7 +35,6 @@ function App() {
 			<Layout>
 				<Header />
 				<Chat />
-				<button onClick={() => window.open(AUTH_URI, '_self')}>Login</button>
 			</Layout>
 		</div>
 	);
