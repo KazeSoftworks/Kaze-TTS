@@ -1,34 +1,25 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AUTH_URI, VALIDATE_URI } from '../utils/constants';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+import { AUTH_URI, VALIDATE_URI } from '../utils/constants';
 import { setAuth } from '../utils/Redux/authSlice';
 
 const Twitch = () => {
-	const [error, setError] = React.useState(null);
 	const dispatch = useDispatch();
 	const location = useLocation();
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 	const { search, hash } = location;
 
-	const getQuery = (search) => {
-		const query = search.substring(1);
+	const getQuery = (url) => {
+		const query = url.substring(1);
 		const vars = query.split('&');
-		let result = {};
-		vars.forEach(function (part) {
-			var item = part.split('=');
+		const result = {};
+		vars.forEach((part) => {
+			const item = part.split('=');
 			result[item[0]] = decodeURIComponent(item[1]);
 		});
 		return result;
-	};
-
-	const RetryButton = () => {
-		return (
-			<button type="button" onClick={() => window.open(AUTH_URI, '_self')}>
-				Retry
-			</button>
-		);
 	};
 
 	useEffect(() => {
@@ -64,7 +55,14 @@ const Twitch = () => {
 					<div>
 						Has negado el permiso para acceder a la información de Twitch.
 					</div>
-					<div>{RetryButton()}</div>
+					<div>
+						<button
+							type="button"
+							onClick={() => window.open(AUTH_URI, '_self')}
+						>
+							Retry
+						</button>
+					</div>
 				</>
 			)}
 		</div>

@@ -1,8 +1,6 @@
 import tmi from 'tmi.js';
-import { useSelector, useDispatch } from 'react-redux';
-import { messagesSlice } from '../Redux/messagesSlice';
 
-export const client = new tmi.Client({
+const client = new tmi.Client({
 	options: { skipUpdatingEmotesets: true, debug: true },
 	identity: {
 		username: process.env.REACT_APP_CLIENT_USERNAME,
@@ -11,3 +9,5 @@ export const client = new tmi.Client({
 	channels: [process.env.REACT_APP_CHANNEL],
 	messagesLogLevel: 'info',
 });
+
+export default client;

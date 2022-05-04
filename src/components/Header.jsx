@@ -1,9 +1,9 @@
 import React from 'react';
-import KazeSymbol from '../assets/KazeSymbol.svg';
-import { AUTH_URI } from '../utils/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitch } from '@fortawesome/free-brands-svg-icons';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { AUTH_URI } from '../utils/constants';
+import KazeSymbol from '../assets/KazeSymbol.svg';
 import '../scss/Header.scss';
 
 const Header = () => {

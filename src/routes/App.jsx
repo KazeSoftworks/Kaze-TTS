@@ -1,15 +1,14 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Layout from '../container/Layout';
 import Header from '../components/Header';
 import '../scss/App.scss';
-//import { useAuthenticate } from './utils/Twitch/auth';
-import { client } from '../utils/Twitch/chat';
-import { useDispatch } from 'react-redux';
+// import { useAuthenticate } from './utils/Twitch/auth';
+import client from '../utils/Twitch/chat';
 import { messagesSlice } from '../utils/Redux/messagesSlice';
 import Chat from '../components/Chat';
-import { AUTH_URI } from '../utils/constants';
 
-function App() {
+const App = () => {
 	const dispatch = useDispatch();
 	client.connect().catch((err) => {
 		console.error(err);
@@ -38,6 +37,6 @@ function App() {
 			</Layout>
 		</div>
 	);
-}
+};
 
 export default App;
