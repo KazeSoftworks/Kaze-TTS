@@ -1,13 +1,13 @@
 import React from 'react';
-import Layout from './container/Layout';
-import Header from './components/Header';
-import './scss/App.scss';
+import Layout from '../container/Layout';
+import Header from '../components/Header';
+import '../scss/App.scss';
 //import { useAuthenticate } from './utils/Twitch/auth';
-import { client } from './utils/Twitch/chat';
+import { client } from '../utils/Twitch/chat';
 import { useDispatch } from 'react-redux';
-import { messagesSlice } from './utils/Redux/messagesSlice';
-import Chat from './components/Chat';
-import { AUTH_URI } from './utils/constants';
+import { messagesSlice } from '../utils/Redux/messagesSlice';
+import Chat from '../components/Chat';
+import { AUTH_URI } from '../utils/constants';
 
 function App() {
 	const dispatch = useDispatch();
@@ -35,11 +35,7 @@ function App() {
 			<Layout>
 				<Header />
 				<Chat />
-				<button
-					onClick={() => window.open(AUTH_URI, '_self', 'width=600,height=500')}
-				>
-					Login
-				</button>
+				<button onClick={() => window.open(AUTH_URI, '_self')}>Login</button>
 			</Layout>
 		</div>
 	);
