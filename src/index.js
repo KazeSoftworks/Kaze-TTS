@@ -8,6 +8,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import Twitch from './routes/Twitch';
+import NotFound from './routes/NotFound';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
@@ -18,6 +19,7 @@ root.render(
 			<Routes>
 				<Route path="/" element={<App />} />
 				<Route path="twitch" element={<Twitch />} />
+				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</Provider>
 	</BrowserRouter>
