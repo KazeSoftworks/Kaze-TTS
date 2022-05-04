@@ -11,11 +11,22 @@
 		display: flex;
 		justify-content: flex-start;
 		gap: 16px;
+		align-items: center;
+	}
+	&__right {
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+		gap: 16px;
+		align-items: center;
 	}
 
 	&__logo {
 		height: 40px;
 		margin-left: 16px;
+	}
+	&__account_logo {
+		height: 40px;
 	}
 
 	&__login-button {
@@ -32,10 +43,7 @@
 		transition: all 0.4s ease;
 		cursor: pointer;
 		width: 7rem;
-		& img {
-			height: 1.2rem;
-			margin-bottom: -0.1rem;
-		}
+
 		&:hover {
 			background-color: var(--twitch-color-light);
 		}

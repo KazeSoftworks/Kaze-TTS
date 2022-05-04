@@ -1,8 +1,10 @@
 import React from 'react';
 import KazeSymbol from '../assets/KazeSymbol.svg';
-import '../scss/Header.scss';
 import { AUTH_URI } from '../utils/constants';
-import TwitchLogo from '../assets/TwitchGlitchWhite.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTwitch } from '@fortawesome/free-brands-svg-icons';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import '../scss/Header.scss';
 
 const Header = () => {
 	return (
@@ -17,8 +19,9 @@ const Header = () => {
 					className="header__login-button"
 					onClick={() => window.open(AUTH_URI, '_self')}
 				>
-					<img src={TwitchLogo} alt="Twitch logo" /> LOGIN
+					<FontAwesomeIcon icon={faTwitch} /> LOGIN
 				</button>
+				<FontAwesomeIcon className="header__account_logo" icon={faCircleUser} />
 			</div>
 		</div>
 	);
