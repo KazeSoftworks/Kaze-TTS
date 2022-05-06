@@ -1,0 +1,32 @@
+.button {
+	box-shadow: rgba(255, 255, 255, 0.4) 0 -1px 0 0 inset;
+	font-size: 1rem;
+	color: var(--primary-font-color);
+	border: 0;
+	border-radius: 0.5rem;
+	padding: 0.5rem 1rem;
+	background-color: var(--normal-color);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	transition: all 0.4s ease;
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--normal-color-light);
+	}
+	&:active {
+		background-color: var(--normal-color-dark);
+	}
+}
+
+.button-twitch {
+	background-color: var(--twitch-color);
+	&:hover {
+		background-color: var(--twitch-color-light);
+	}
+	&:active {
+		background-color: var(--twitch-color-dark);
+	}
+}
