@@ -19,6 +19,24 @@
 	&:active {
 		background-color: var(--normal-color-dark);
 	}
+
+	&--loading {
+		background-color: var(--normal-color-light) !important;
+		pointer-events: none;
+		color: transparent;
+		user-select: none;
+		box-shadow: 0 0 0 0;
+	}
+
+	&__content {
+		&__spinner {
+			position: absolute;
+			color: var(--primary-font-color);
+			width: 1rem;
+			height: 1rem;
+			border-radius: 50%;
+		}
+	}
 }
 
 .button-twitch {
