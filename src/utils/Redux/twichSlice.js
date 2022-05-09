@@ -1,24 +1,42 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getUser } from '../../services/api';
 
 const initialState = {
-	isAuthenticated: false,
-	isLoadingValidate: false,
-	isLoadingRevoke: false,
-	userId: null,
+	isLoadingUserInfo: false,
+	displayName: '',
+	profileImageUrl: '',
+	error: [],
 };
+
+export const getUserInfo = createAsyncThunk(
+	'twitch/getUserInfo',
+	async (__, { getState }) => {
+		const { token, userId } = getState().auth;
+		if (token) {
+			const response = getUser(token, userId);
+			return response;
+		}
+		throw new Error('No token');
+	}
+);
 
 export const twitchSlice = createSlice({
 	name: 'twitch',
 	initialState,
-	reducers: {
-		setAuthenticated: (state) => {
-			state.isAuthenticated = true;
+	extraReducers: {
+		[getUserInfo.fulfilled]: (state, action) => {
+			state.isLoadingUserInfo = false;
+			state.displayName = action.payload.display_name;
+			state.profileImageUrl = action.payload.profile_image_url;
 		},
-		clearAuthenticated: (state) => {
-			state.isAuthenticated = false;
+		[getUserInfo.rejected]: (state, action) => {
+			state.isLoadingUserInfo = false;
+			console.error(action.payload);
+		},
+		[getUserInfo.pending]: (state) => {
+			state.isLoadingUserInfo = true;
 		},
 	},
 });
 
-export const { setAuthenticated } = twitchSlice.actions;
 export default twitchSlice.reducer;
