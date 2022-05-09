@@ -1,13 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import messagesReducer from './messagesSlice';
-import authReducer from './authSlice';
+import authReducer, { initialState } from './authSlice';
+import twitchReducer from './twichSlice';
 
 const authMiddleware = (store) => (next) => (action) => {
 	const result = next(action);
 	if (action.type?.startsWith('auth/')) {
-		const authState = store.getState().auth;
-		localStorage.setItem('auth', JSON.stringify(authState));
+		const { token } = store.getState().auth;
+		localStorage.setItem('auth', JSON.stringify({ token }));
 	}
 	return result;
 };
@@ -15,7 +16,7 @@ const authMiddleware = (store) => (next) => (action) => {
 const reHydrateStore = () => {
 	if (localStorage.getItem('auth') !== null) {
 		const data = JSON.parse(localStorage.getItem('auth'));
-		return { auth: data };
+		return { auth: { ...data, ...initialState } };
 	}
 	return {};
 };
@@ -24,6 +25,7 @@ const store = configureStore({
 	reducer: {
 		messages: messagesReducer,
 		auth: authReducer,
+		twitch: twitchReducer,
 	},
 	preloadedState: reHydrateStore(),
 	middleware: (getDefaultMiddleware) =>

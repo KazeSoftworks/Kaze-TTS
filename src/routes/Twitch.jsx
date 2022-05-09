@@ -35,8 +35,6 @@ const Twitch = () => {
 					dispatch(
 						setAuth({
 							token: getQuery(hash).access_token,
-							userId: res.data.user_id,
-							username: res.data.login,
 						})
 					);
 					navigate('/');

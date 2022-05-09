@@ -48,3 +48,13 @@
 		background-color: var(--twitch-color-dark);
 	}
 }
+
+.button-signout {
+	background-color: var(--signout-color);
+	&:hover {
+		background-color: var(--signout-color-light);
+	}
+	&:active {
+		background-color: var(--signout-color-dark);
+	}
+}
