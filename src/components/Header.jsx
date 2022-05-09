@@ -17,6 +17,7 @@ const Header = () => {
 	const { isAuthenticated, isLoadingValidate, isLoadingRevoke } = useSelector(
 		(state) => state.auth
 	);
+	const { profileImageUrl } = useSelector((state) => state.twitch);
 
 	const handleLogin = () => {
 		window.location.href = AUTH_URI;
@@ -41,7 +42,19 @@ const Header = () => {
 				>
 					{isAuthenticated ? 'Disconnect' : 'Login'}
 				</Button>
-				<FontAwesomeIcon className="header__account_logo" icon={faCircleUser} />
+				{isAuthenticated && profileImageUrl ? (
+					<img
+						className="header__account_logo"
+						src={profileImageUrl}
+						alt="Twitch Profile"
+						loading="lazy"
+					/>
+				) : (
+					<FontAwesomeIcon
+						className="header__account_logo"
+						icon={faCircleUser}
+					/>
+				)}
 			</div>
 		</div>
 	);

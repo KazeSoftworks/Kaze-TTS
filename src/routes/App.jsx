@@ -5,10 +5,12 @@ import Header from '../components/Header';
 import '../scss/App.scss';
 import Chat from '../components/Chat';
 import { validateToken } from '../utils/Redux/authSlice';
+import { getUserInfo } from '../utils/Redux/twichSlice';
 
 const App = () => {
 	const dispatch = useDispatch();
-	const { token } = useSelector((state) => state.auth);
+	const { token, isAuthenticated } = useSelector((state) => state.auth);
+	const { displayName } = useSelector((state) => state.twitch);
 	// client.connect().catch((err) => {
 	// 	console.error(err);
 	// });
@@ -34,10 +36,17 @@ const App = () => {
 		}
 	}, [token, dispatch]);
 
+	useEffect(() => {
+		if (isAuthenticated) {
+			dispatch(getUserInfo());
+		}
+	}, [isAuthenticated, dispatch]);
+
 	return (
 		<div className="App">
 			<Layout>
 				<Header />
+				{isAuthenticated && displayName ? `Welcome ${displayName}` : null}
 				<Chat />
 			</Layout>
 		</div>
