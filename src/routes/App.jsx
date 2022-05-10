@@ -5,12 +5,12 @@ import Header from '../components/Header';
 import '../scss/App.scss';
 import Chat from '../components/Chat';
 import { validateToken } from '../utils/Redux/authSlice';
-import { getUserInfo } from '../utils/Redux/twichSlice';
+import { getFollowersInfo, getUserInfo } from '../utils/Redux/twichSlice';
+import Footer from '../components/Footer';
 
 const App = () => {
 	const dispatch = useDispatch();
 	const { token, isAuthenticated } = useSelector((state) => state.auth);
-	const { displayName } = useSelector((state) => state.twitch);
 	// client.connect().catch((err) => {
 	// 	console.error(err);
 	// });
@@ -39,6 +39,7 @@ const App = () => {
 	useEffect(() => {
 		if (isAuthenticated) {
 			dispatch(getUserInfo());
+			dispatch(getFollowersInfo());
 		}
 	}, [isAuthenticated, dispatch]);
 
@@ -46,8 +47,8 @@ const App = () => {
 		<div className="App">
 			<Layout>
 				<Header />
-				{isAuthenticated && displayName ? `Welcome ${displayName}` : null}
 				<Chat />
+				<Footer />
 			</Layout>
 		</div>
 	);
