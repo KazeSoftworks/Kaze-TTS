@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../container/Layout';
 import Header from '../components/Header';
@@ -7,10 +7,14 @@ import Chat from '../components/Chat';
 import { validateToken } from '../utils/Redux/authSlice';
 import { getFollowersInfo, getUserInfo } from '../utils/Redux/twichSlice';
 import Footer from '../components/Footer';
+import Loader from '../components/Loader';
 
 const App = () => {
 	const dispatch = useDispatch();
 	const { token, isAuthenticated } = useSelector((state) => state.auth);
+	const [loading, setLoading] = useState(null);
+	const [chatClient, setChatClient] = useState(null);
+
 	// client.connect().catch((err) => {
 	// 	console.error(err);
 	// });
@@ -38,8 +42,17 @@ const App = () => {
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			dispatch(getUserInfo());
-			dispatch(getFollowersInfo());
+			setLoading(true);
+			dispatch(getUserInfo())
+				.unwrap()
+				.then(() => {
+					console.log('user info loaded');
+					return dispatch(getFollowersInfo()).unwrap();
+				})
+				.then(() => {
+					console.log('followers info loaded');
+					setLoading(false);
+				});
 		}
 	}, [isAuthenticated, dispatch]);
 
@@ -49,6 +62,7 @@ const App = () => {
 				<Header />
 				<Chat />
 				<Footer />
+				{loading && <Loader />}
 			</Layout>
 		</div>
 	);
