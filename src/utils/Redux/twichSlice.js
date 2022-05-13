@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getFollowers, getUser } from '../../services/api';
+import { getFollowers, getGlobalEmotes, getUser } from '../../services/api';
 
 const initialState = {
 	isLoadingUserInfo: false,
 	isLoadingFollowers: false,
+	isLoadingGlobalEmotes: false,
 	displayName: '',
 	profileImageUrl: '',
 	followers: null,
+	globalEmotes: null,
 	error: [],
 };
 
@@ -28,6 +30,18 @@ export const getFollowersInfo = createAsyncThunk(
 		const { token, userId } = getState().auth;
 		if (token) {
 			const response = getFollowers(token, userId);
+			return response;
+		}
+		throw new Error('No token');
+	}
+);
+
+export const getGlobalEmotesInfo = createAsyncThunk(
+	'twitch/getGlobalEmotes',
+	async (__, { getState }) => {
+		const { token } = getState().auth;
+		if (token) {
+			const response = getGlobalEmotes(token);
 			return response;
 		}
 		throw new Error('No token');
@@ -61,6 +75,19 @@ export const twitchSlice = createSlice({
 		},
 		[getFollowersInfo.pending]: (state) => {
 			state.isLoadingFollowers = true;
+		},
+
+		[getGlobalEmotesInfo.fulfilled]: (state, action) => {
+			state.isLoadingGlobalEmotes = false;
+			state.globalEmotes = action.payload;
+			// todo: filter request mayhem
+		},
+		[getGlobalEmotesInfo.rejected]: (state, action) => {
+			state.isLoadingGlobalEmotes = false;
+			console.error(action.payload);
+		},
+		[getGlobalEmotesInfo.pending]: (state) => {
+			state.isLoadingGlobalEmotes = true;
 		},
 	},
 });

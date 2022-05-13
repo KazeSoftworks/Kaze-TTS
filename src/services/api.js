@@ -17,7 +17,7 @@ const baseQuery = (url, token, params) => {
 const getUser = async (token, userId) => {
 	const params = new URLSearchParams();
 	params.append('id', userId);
-	return baseQuery('/users', token, params)
+	return baseQuery('users', token, params)
 		.then((response) => {
 			return response.data.data[0];
 		})
@@ -39,4 +39,14 @@ const getFollowers = async (token, userId) => {
 		});
 };
 
-export { getUser, getFollowers };
+const getGlobalEmotes = async (token) => {
+	return baseQuery('chat/emotes/global', token)
+		.then((response) => {
+			return response.data.data;
+		})
+		.catch((error) => {
+			throw new Error(error.response.data);
+		});
+};
+
+export { getUser, getFollowers, getGlobalEmotes };

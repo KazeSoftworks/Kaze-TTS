@@ -5,7 +5,11 @@ import Header from '../components/Header';
 import '../scss/App.scss';
 import Chat from '../components/Chat';
 import { validateToken } from '../utils/Redux/authSlice';
-import { getFollowersInfo, getUserInfo } from '../utils/Redux/twichSlice';
+import {
+	getFollowersInfo,
+	getGlobalEmotesInfo,
+	getUserInfo,
+} from '../utils/Redux/twichSlice';
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 
@@ -51,7 +55,14 @@ const App = () => {
 				})
 				.then(() => {
 					console.log('followers info loaded');
+					return dispatch(getGlobalEmotesInfo()).unwrap();
+				})
+				.then(() => {
+					console.log('global emotes info loaded');
 					setLoading(false);
+				})
+				.then(() => {
+					console.log('loading finished');
 				});
 		}
 	}, [isAuthenticated, dispatch]);
