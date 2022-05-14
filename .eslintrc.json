@@ -6,7 +6,8 @@
 	"extends": [
 		"plugin:react/recommended",
 		"airbnb",
-		"plugin:prettier/recommended"
+		"plugin:prettier/recommended",
+		"plugin:import/recommended"
 	],
 	"parserOptions": {
 		"ecmaFeatures": {
@@ -15,7 +16,7 @@
 		"ecmaVersion": "latest",
 		"sourceType": "module"
 	},
-	"plugins": ["react"],
+	"plugins": ["react", "import"],
 	"rules": {
 		"prettier/prettier": [
 			"error",
@@ -40,5 +41,22 @@
 				"namedComponents": "arrow-function"
 			}
 		]
+	},
+	"settings": {
+		"import/resolver": {
+			"alias": {
+				"map": [
+					["@components", "./src/components"],
+					["@utils", "./src/utils"],
+					["@routes", "./src/routes"],
+					["@container", "./src/container"],
+					["@features", "./src/features"],
+					["@scss", "./src/scss"],
+					["@assets", "./src/assets"],
+					["@services", "./src/services"]
+				],
+				"extensions": [".ts", ".js", ".jsx", ".json"]
+			}
+		}
 	}
 }

@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./src",
+		"jsx": "react",
+		"paths": {
+			"@components": ["components/"],
+			"@utils": ["utils/"],
+			"@routes": ["routes/"],
+			"@features": ["features/"],
+			"@container": ["container/"],
+			"@scss": ["scss/"],
+			"@assets": ["assets/"],
+			"@services": ["services/"]
+		}
+	}
+}
