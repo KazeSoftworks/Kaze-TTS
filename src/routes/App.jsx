@@ -12,23 +12,19 @@ import {
 } from '../utils/Redux/twichSlice';
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
+import getClient from '../utils/Twitch/chat';
 
 const App = () => {
 	const dispatch = useDispatch();
-	const { token, isAuthenticated } = useSelector((state) => state.auth);
+	const { username, token, isAuthenticated } = useSelector(
+		(state) => state.auth
+	);
 	const [loading, setLoading] = useState(null);
+	const [appLoaded, setAppLoaded] = useState(false);
 	const [chatClient, setChatClient] = useState(null);
 
 	// client.connect().catch((err) => {
 	// 	console.error(err);
-	// });
-
-	// client.on('message', (channel, tags, message, self) => {
-	// 	// Ignore echoed messages.
-	// 	if (self) {
-	// 		return;
-	// 	}
-	// 	dispatch(messagesSlice.actions.addMessage({ tags, message }));
 	// });
 
 	// client.on(
@@ -63,9 +59,27 @@ const App = () => {
 				})
 				.then(() => {
 					console.log('loading finished');
+					setChatClient(getClient(username, token));
 				});
 		}
 	}, [isAuthenticated, dispatch]);
+
+	useEffect(() => {
+		if (chatClient && !appLoaded) {
+			chatClient.connect().catch((err) => {
+				console.error(err);
+			});
+			chatClient.on('message', (channel, tags, message, self) => {
+				// Ignore echoed messages.
+				if (self) {
+					return;
+				}
+				console.log(tags, message);
+				// dispatch(messagesSlice.actions.addMessage({ tags, message }));
+			});
+			setAppLoaded(true);
+		}
+	}, [chatClient, appLoaded]);
 
 	return (
 		<div className="App">
