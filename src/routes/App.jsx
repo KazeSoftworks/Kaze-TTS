@@ -4,15 +4,15 @@ import Layout from '../container/Layout';
 import Header from '../components/Header';
 import '../scss/App.scss';
 import Chat from '../components/Chat';
-import { validateToken } from '../utils/Redux/authSlice';
+import { validateToken } from '../features/authSlice';
 import {
 	getFollowersInfo,
 	getGlobalEmotesInfo,
 	getUserInfo,
-} from '../utils/Redux/twichSlice';
+} from '../features/twichSlice';
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
-import getClient from '../utils/Twitch/chat';
+import getClient from '../utils/chat';
 
 const App = () => {
 	const dispatch = useDispatch();

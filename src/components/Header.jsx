@@ -10,7 +10,7 @@ import { AUTH_URI } from '../utils/constants';
 import KazeSymbol from '../assets/KazeSymbol.svg';
 import '../scss/Header.scss';
 import Button from './Button';
-import { revokeToken } from '../utils/Redux/authSlice';
+import { revokeToken } from '../features/authSlice';
 
 const Header = () => {
 	const dispatch = useDispatch();
