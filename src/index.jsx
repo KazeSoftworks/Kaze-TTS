@@ -3,12 +3,12 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import App from './routes/App';
-import store from './features/store';
+import App from '@routes/App';
+import store from '@features/store';
+// import reportWebVitals from '@reportWebVitals';
+import Twitch from '@routes/Twitch';
+import NotFound from '@routes/NotFound';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-// import reportWebVitals from './reportWebVitals';
-import Twitch from './routes/Twitch';
-import NotFound from './routes/NotFound';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);

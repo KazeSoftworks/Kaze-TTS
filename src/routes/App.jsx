@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Layout from '../container/Layout';
-import Header from '../components/Header';
-import '../scss/App.scss';
-import Chat from '../components/Chat';
-import { validateToken } from '../features/authSlice';
+import Layout from '@container/Layout';
+import Header from '@components/Header';
+import '@scss/App.scss';
+import Chat from '@components/Chat';
+import { validateToken } from '@features/authSlice';
 import {
 	getFollowersInfo,
 	getGlobalEmotesInfo,
 	getUserInfo,
-} from '../features/twichSlice';
-import Footer from '../components/Footer';
-import Loader from '../components/Loader';
-import getClient from '../utils/chat';
+} from '@features/twichSlice';
+import Footer from '@components/Footer';
+import Loader from '@components/Loader';
+import getClient from '@utils/chat';
 
 const App = () => {
 	const dispatch = useDispatch();

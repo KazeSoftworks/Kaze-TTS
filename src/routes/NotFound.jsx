@@ -1,8 +1,8 @@
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
-import '../scss/NotFound.scss';
+import Button from '@components/Button';
+import '@scss/NotFound.scss';
 
 const NotFound = () => {
 	const navigate = useNavigate();

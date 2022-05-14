@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ID_API } from '../utils/constants';
+import { ID_API } from '@utils/constants';
 
 const baseQuery = (url, token) => {
 	return axios({

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API, CLIENT_ID } from '../utils/constants';
+import { API, CLIENT_ID } from '@utils/constants';
 
 const baseQuery = (url, token, params) => {
 	return axios({

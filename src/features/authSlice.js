@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { revoke, validate } from '../services/oauth';
+import { revoke, validate } from '@services/oauth';
 
 export const initialState = {
 	username: '',

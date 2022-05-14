@@ -1,7 +1,7 @@
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import '../scss/Loader.scss';
+import '@scss/Loader.scss';
 
 const Loader = () => {
 	return (

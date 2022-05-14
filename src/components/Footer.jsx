@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import '../scss/Footer.scss';
+import '@scss/Footer.scss';
 
 const Footer = () => {
 	const { isAuthenticated } = useSelector((state) => state.auth);

@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { AUTH_URI, VALIDATE_URI } from '../utils/constants';
-import { setAuth } from '../features/authSlice';
+import { AUTH_URI, VALIDATE_URI } from '@utils/constants';
+import { setAuth } from '@features/authSlice';
 
 const Twitch = () => {
 	const dispatch = useDispatch();

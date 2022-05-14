@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getFollowers, getGlobalEmotes, getUser } from '../services/api';
+import { getFollowers, getGlobalEmotes, getUser } from '@services/api';
 
 const initialState = {
 	isLoadingUserInfo: false,

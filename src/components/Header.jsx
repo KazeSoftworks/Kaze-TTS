@@ -6,11 +6,11 @@ import {
 	faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { AUTH_URI } from '../utils/constants';
-import KazeSymbol from '../assets/KazeSymbol.svg';
-import '../scss/Header.scss';
-import Button from './Button';
-import { revokeToken } from '../features/authSlice';
+import { AUTH_URI } from '@utils/constants';
+import KazeSymbol from '@assets/KazeSymbol.svg';
+import '@scss/Header.scss';
+import { revokeToken } from '@features/authSlice';
+import Button from '@components/Button';
 
 const Header = () => {
 	const dispatch = useDispatch();
