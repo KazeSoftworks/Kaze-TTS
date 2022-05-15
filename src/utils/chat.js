@@ -7,7 +7,7 @@ const getClient = (username, token) => {
 			username,
 			password: token,
 		},
-		channels: [process.env.REACT_APP_CHANNEL],
+		channels: [username],
 		messagesLogLevel: 'info',
 	});
 	return client;
