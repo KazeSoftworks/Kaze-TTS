@@ -1,14 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getFollowers, getGlobalEmotes, getUser } from '@services/api';
+import getGlobalBTTVEmotes from '@services/bttvApi';
+import { parseBbtvEmote, parseTwitchEmote } from 'utils/emoteHandler';
 
 const initialState = {
 	isLoadingUserInfo: false,
 	isLoadingFollowers: false,
 	isLoadingGlobalEmotes: false,
+	isLoadingGlobalBTTVEmotes: false,
 	displayName: '',
 	profileImageUrl: '',
 	followers: null,
 	globalEmotes: null,
+	bttvEmotes: null,
 	error: [],
 };
 
@@ -48,6 +52,14 @@ export const getGlobalEmotesInfo = createAsyncThunk(
 	}
 );
 
+export const getGlobalBTTVEmotesInfo = createAsyncThunk(
+	'twitch/getGlobalBTTVEmotes',
+	async () => {
+		const response = await getGlobalBTTVEmotes();
+		return response;
+	}
+);
+
 export const twitchSlice = createSlice({
 	name: 'twitch',
 	initialState,
@@ -79,8 +91,7 @@ export const twitchSlice = createSlice({
 
 		[getGlobalEmotesInfo.fulfilled]: (state, action) => {
 			state.isLoadingGlobalEmotes = false;
-			state.globalEmotes = action.payload;
-			// todo: filter request mayhem
+			state.globalEmotes = parseTwitchEmote(action.payload);
 		},
 		[getGlobalEmotesInfo.rejected]: (state, action) => {
 			state.isLoadingGlobalEmotes = false;
@@ -88,6 +99,18 @@ export const twitchSlice = createSlice({
 		},
 		[getGlobalEmotesInfo.pending]: (state) => {
 			state.isLoadingGlobalEmotes = true;
+		},
+
+		[getGlobalBTTVEmotesInfo.fulfilled]: (state, action) => {
+			state.isLoadingGlobalBTTVEmotes = false;
+			state.bttvEmotes = parseBbtvEmote(action.payload);
+		},
+		[getGlobalBTTVEmotesInfo.rejected]: (state, action) => {
+			state.isLoadingGlobalBTTVEmotes = false;
+			console.error(action.payload);
+		},
+		[getGlobalBTTVEmotesInfo.pending]: (state) => {
+			state.isLoadingGlobalBTTVEmotes = true;
 		},
 	},
 });

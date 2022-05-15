@@ -10,3 +10,5 @@ export const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 
 export const ID_API = 'https://id.twitch.tv/oauth2/';
 export const API = 'https://api.twitch.tv/helix/';
+
+export const BTTV_API = 'https://api.betterttv.net/3/cached/';

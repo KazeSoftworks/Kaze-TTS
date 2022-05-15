@@ -9,6 +9,7 @@ import {
 	getFollowersInfo,
 	getGlobalEmotesInfo,
 	getUserInfo,
+	getGlobalBTTVEmotesInfo,
 } from '@features/twichSlice';
 import Footer from '@components/Footer';
 import Loader from '@components/Loader';
@@ -56,8 +57,10 @@ const App = () => {
 				.then(() => {
 					console.log('global emotes info loaded');
 					setLoading(false);
+					return dispatch(getGlobalBTTVEmotesInfo()).unwrap();
 				})
 				.then(() => {
+					console.log('global BBTV info loaded');
 					console.log('loading finished');
 					setChatClient(getClient(username, token));
 				});
