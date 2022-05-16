@@ -1,18 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getFollowers, getGlobalEmotes, getUser } from '@services/api';
-import getGlobalBTTVEmotes from '@services/bttvApi';
-import { parseBbtvEmote, parseTwitchEmote } from 'utils/emoteHandler';
+import { getFollowers, getUser } from '@services/api';
 
 const initialState = {
 	isLoadingUserInfo: false,
 	isLoadingFollowers: false,
-	isLoadingGlobalEmotes: false,
-	isLoadingGlobalBTTVEmotes: false,
 	displayName: '',
 	profileImageUrl: '',
 	followers: null,
-	globalEmotes: null,
-	bttvEmotes: null,
 	error: [],
 };
 
@@ -37,26 +31,6 @@ export const getFollowersInfo = createAsyncThunk(
 			return response;
 		}
 		throw new Error('No token');
-	}
-);
-
-export const getGlobalEmotesInfo = createAsyncThunk(
-	'twitch/getGlobalEmotes',
-	async (__, { getState }) => {
-		const { token } = getState().auth;
-		if (token) {
-			const response = getGlobalEmotes(token);
-			return response;
-		}
-		throw new Error('No token');
-	}
-);
-
-export const getGlobalBTTVEmotesInfo = createAsyncThunk(
-	'twitch/getGlobalBTTVEmotes',
-	async () => {
-		const response = await getGlobalBTTVEmotes();
-		return response;
 	}
 );
 
@@ -87,30 +61,6 @@ export const twitchSlice = createSlice({
 		},
 		[getFollowersInfo.pending]: (state) => {
 			state.isLoadingFollowers = true;
-		},
-
-		[getGlobalEmotesInfo.fulfilled]: (state, action) => {
-			state.isLoadingGlobalEmotes = false;
-			state.globalEmotes = parseTwitchEmote(action.payload);
-		},
-		[getGlobalEmotesInfo.rejected]: (state, action) => {
-			state.isLoadingGlobalEmotes = false;
-			console.error(action.payload);
-		},
-		[getGlobalEmotesInfo.pending]: (state) => {
-			state.isLoadingGlobalEmotes = true;
-		},
-
-		[getGlobalBTTVEmotesInfo.fulfilled]: (state, action) => {
-			state.isLoadingGlobalBTTVEmotes = false;
-			state.bttvEmotes = parseBbtvEmote(action.payload);
-		},
-		[getGlobalBTTVEmotesInfo.rejected]: (state, action) => {
-			state.isLoadingGlobalBTTVEmotes = false;
-			console.error(action.payload);
-		},
-		[getGlobalBTTVEmotesInfo.pending]: (state) => {
-			state.isLoadingGlobalBTTVEmotes = true;
 		},
 	},
 });

@@ -1,4 +1,12 @@
-const parseBbtvEmote = (response) => {
+const getTwitchEmoteUrl = (emoteId) => {
+	return `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;
+};
+
+const getBttvEmoteUrl = (emoteId) => {
+	return `https://cdn.betterttv.net/emote/${emoteId}/3x`;
+};
+
+const parseBttvEmote = (response) => {
 	const bbtv = {};
 	response.forEach((item) => {
 		if (item.code) {
@@ -18,4 +26,4 @@ const parseTwitchEmote = (response) => {
 	return twitch;
 };
 
-export { parseBbtvEmote, parseTwitchEmote };
+export { parseBttvEmote, parseTwitchEmote, getTwitchEmoteUrl, getBttvEmoteUrl };

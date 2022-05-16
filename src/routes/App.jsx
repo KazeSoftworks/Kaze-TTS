@@ -5,15 +5,15 @@ import Header from '@components/Header';
 import '@scss/App.scss';
 import Chat from '@components/Chat';
 import { validateToken } from '@features/authSlice';
-import {
-	getFollowersInfo,
-	getGlobalEmotesInfo,
-	getUserInfo,
-	getGlobalBTTVEmotesInfo,
-} from '@features/twichSlice';
+import { getFollowersInfo, getUserInfo } from '@features/twichSlice';
 import Footer from '@components/Footer';
 import Loader from '@components/Loader';
 import getClient from '@utils/chat';
+import {
+	addMessage,
+	getGlobalBTTVEmotesInfo,
+	getGlobalEmotesInfo,
+} from '@features/messagesSlice';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -77,8 +77,7 @@ const App = () => {
 				if (self) {
 					return;
 				}
-				console.log(tags, message);
-				// dispatch(messagesSlice.actions.addMessage({ tags, message }));
+				dispatch(addMessage({ tags, message }));
 			});
 			setAppLoaded(true);
 		}
