@@ -4,17 +4,13 @@ import '@scss/Chat.scss';
 import Message from './Message';
 
 const Chat = () => {
-	const { messagesList } = useSelector((state) => state.messages);
+	const { messages } = useSelector((state) => state.messages);
 
 	return (
 		<div className="chat">
 			<ul>
-				{messagesList.map((message) => (
-					<Message
-						key={message.tags.id}
-						author={message.tags['display-name']}
-						message={message.message}
-					/>
+				{messages.map((message) => (
+					<Message key={message.id} message={message} />
 				))}
 			</ul>
 		</div>
