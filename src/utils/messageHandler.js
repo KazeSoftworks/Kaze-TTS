@@ -1,4 +1,7 @@
 const containsBBTVEmotes = (msg, dictionary) => {
+	if (!dictionary) {
+		return null;
+	}
 	const emoteCode = Object.keys(dictionary);
 	if (emoteCode.some((substring) => msg.includes(substring))) {
 		const emotePositions = emoteCode.reduce((prev, current) => {
@@ -20,13 +23,37 @@ const containsBBTVEmotes = (msg, dictionary) => {
 				indexOccurence += index + current.length;
 			}
 			if (positions.length > 0) {
-				return { ...prev, [dictionary[current]]: positions };
+				return {
+					...prev,
+					[current]: { code: dictionary[current], positions },
+				};
 			}
 			return prev;
 		}, {});
 		return emotePositions;
 	}
 	return null;
+};
+
+const containsTwitchEmotes = (msg, emotes) => {
+	// Get the emote codes from the message
+	if (!emotes) {
+		return null;
+	}
+	const emoteCodes = Object.keys(emotes).reduce((prev, current) => {
+		const position = emotes[current][0].split('-');
+		const start = parseInt(position[0], 10);
+		const end = parseInt(position[1], 10);
+		const emoteCode = msg.substring(start, end + 1);
+		return {
+			...prev,
+			[emoteCode]: {
+				code: current,
+				positions: emotes[current],
+			},
+		};
+	}, {});
+	return emoteCodes;
 };
 
 const parseTwitchMessage = ({ tags, message }, bttvDictionary) => {
@@ -48,10 +75,8 @@ const parseTwitchMessage = ({ tags, message }, bttvDictionary) => {
 	return {
 		badges,
 		color,
-		emotes,
-		emotesBBTV: bttvDictionary
-			? containsBBTVEmotes(message, bttvDictionary)
-			: null,
+		emotes: containsTwitchEmotes(message, emotes),
+		emotesBBTV: containsBBTVEmotes(message, bttvDictionary),
 		displayName,
 		userId,
 		id,

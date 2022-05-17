@@ -28,8 +28,18 @@ Message.propTypes = {
 		badges: PropTypes.objectOf(PropTypes.string).isRequired,
 		color: PropTypes.string,
 		displayName: PropTypes.string.isRequired,
-		emotes: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
-		emotesBBTV: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
+		emotes: PropTypes.objectOf(
+			PropTypes.shape({
+				code: PropTypes.string,
+				position: PropTypes.arrayOf(PropTypes.string),
+			})
+		),
+		emotesBBTV: PropTypes.objectOf(
+			PropTypes.shape({
+				code: PropTypes.string,
+				position: PropTypes.arrayOf(PropTypes.string),
+			})
+		),
 		id: PropTypes.string.isRequired,
 		text: PropTypes.string.isRequired,
 		mod: PropTypes.bool.isRequired,
