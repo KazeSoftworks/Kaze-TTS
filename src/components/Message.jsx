@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getTwitchEmoteUrl, getBttvEmoteUrl } from '@utils/emoteHandler';
+import '@scss/Message.scss';
 
 const Message = ({ message }) => {
 	const getMessageColor = () => {
@@ -9,16 +11,41 @@ const Message = ({ message }) => {
 		return '#000';
 	};
 
-	// const getMessage = () => {
-	// 	const textComponent = <span />;
-	// };
+	const getMessage = () => {
+		const textComponent = [];
+		const textArray = message.text.split(/(\s+)/);
+		textArray.forEach((word, index) => {
+			if (message.emotes && message.emotes[word]) {
+				textComponent.push(
+					<img
+						className="message__text__emote"
+						key={index}
+						src={getTwitchEmoteUrl(message.emotes[word].code)}
+						alt={word}
+					/>
+				);
+			} else if (message.emotesBBTV && message.emotesBBTV[word]) {
+				textComponent.push(
+					<img
+						className="message__text__emote"
+						key={index}
+						src={getBttvEmoteUrl(message.emotesBBTV[word].code)}
+						alt={word}
+					/>
+				);
+			} else {
+				textComponent.push(word);
+			}
+		});
+		return textComponent;
+	};
 
 	return (
-		<li>
-			<span className="author" style={{ color: getMessageColor() }}>
+		<li className="message">
+			<span className="message__author" style={{ color: getMessageColor() }}>
 				{message.displayName}:
 			</span>
-			<span className="message">{message.text}</span>
+			<span className="message__text">{getMessage()}</span>
 		</li>
 	);
 };
