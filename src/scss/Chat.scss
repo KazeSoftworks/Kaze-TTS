@@ -1,9 +1,8 @@
 .chat {
-	position: relative;
+	height: calc(100vh - var(--header-height) - var(--footer-height));
 	border-radius: 5px;
 	background-color: var(--chat-bg-color);
 	color: var(--primary-font-color);
-	flex: 1;
 	overflow: auto;
 	& ul {
 		padding: 0 0.5rem;
