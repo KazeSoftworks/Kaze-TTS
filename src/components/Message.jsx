@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getTwitchEmoteUrl, getBttvEmoteUrl } from '@utils/emoteHandler';
 import '@scss/Message.scss';
 
-const Message = ({ message }) => {
+const Message = ({ message, index }) => {
 	const getMessageColor = () => {
 		if (message.color) {
 			return message.color;
@@ -14,12 +14,13 @@ const Message = ({ message }) => {
 	const getMessage = () => {
 		const textComponent = [];
 		const textArray = message.text.split(/(\s+)/);
-		textArray.forEach((word, index) => {
+		textArray.forEach((word, imageIndex) => {
 			if (message.emotes && message.emotes[word]) {
 				textComponent.push(
 					<img
 						className="message__text__emote"
-						key={index}
+						// eslint-disable-next-line react/no-array-index-key
+						key={`${message.id}-${imageIndex}`}
 						src={getTwitchEmoteUrl(message.emotes[word].code)}
 						alt={word}
 					/>
@@ -28,7 +29,8 @@ const Message = ({ message }) => {
 				textComponent.push(
 					<img
 						className="message__text__emote"
-						key={index}
+						// eslint-disable-next-line react/no-array-index-key
+						key={`${message.id}-${imageIndex}`}
 						src={getBttvEmoteUrl(message.emotesBBTV[word].code)}
 						alt={word}
 					/>
@@ -51,6 +53,7 @@ const Message = ({ message }) => {
 };
 
 Message.propTypes = {
+	index: PropTypes.number.isRequired,
 	message: PropTypes.shape({
 		badges: PropTypes.objectOf(PropTypes.string).isRequired,
 		color: PropTypes.string,

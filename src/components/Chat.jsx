@@ -9,8 +9,8 @@ const Chat = () => {
 	return (
 		<div className="chat">
 			<ul>
-				{messages.map((message) => (
-					<Message key={message.id} message={message} />
+				{messages.map((message, index) => (
+					<Message index={index} key={message.id} message={message} />
 				))}
 			</ul>
 		</div>

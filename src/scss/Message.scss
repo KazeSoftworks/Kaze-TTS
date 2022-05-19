@@ -4,16 +4,24 @@
 	align-items: center;
 	gap: 0.25rem;
 	padding: 0.5rem;
+	background-color: var(--chat-bg-color-dark);
+	margin-bottom: 0.5rem;
+	border-radius: 5px;
+
 	&__author {
 		font-weight: bold;
 	}
+
 	&__text {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
+		padding-left: 0.2rem;
+		padding-right: 0.2rem;
+		text-justify: inter-word;
 
 		&__emote {
-			height: 1.25rem;
+			height: 1.5rem;
 			padding: 0 0.25rem;
 		}
 	}
