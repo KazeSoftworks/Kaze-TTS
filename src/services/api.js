@@ -59,4 +59,22 @@ const getGlobalChatBadges = async (token) => {
 		});
 };
 
-export { getUser, getFollowers, getGlobalEmotes, getGlobalChatBadges };
+const getChatBadges = async (token, userId) => {
+	const params = new URLSearchParams();
+	params.append('broadcaster_id', userId);
+	return baseQuery('chat/badges', token, params)
+		.then((response) => {
+			return response.data.data;
+		})
+		.catch((error) => {
+			throw new Error(error.response.data);
+		});
+};
+
+export {
+	getUser,
+	getFollowers,
+	getGlobalEmotes,
+	getGlobalChatBadges,
+	getChatBadges,
+};

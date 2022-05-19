@@ -9,6 +9,7 @@ import {
 	getFollowersInfo,
 	getUserInfo,
 	getGlobalChatBadgesInfo,
+	getChatBadgesInfo,
 } from '@features/twichSlice';
 import Footer from '@components/Footer';
 import Loader from '@components/Loader';
@@ -63,7 +64,11 @@ const App = () => {
 					return dispatch(getGlobalChatBadgesInfo()).unwrap();
 				})
 				.then(() => {
-					console.log('global badges info loaded');
+					console.log('global chat info loaded');
+					return dispatch(getChatBadgesInfo()).unwrap();
+				})
+				.then(() => {
+					console.log('chat badges info loaded');
 					setLoading(false);
 					return dispatch(getGlobalBTTVEmotesInfo()).unwrap();
 				})

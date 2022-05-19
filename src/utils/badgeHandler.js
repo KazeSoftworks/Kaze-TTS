@@ -1,4 +1,7 @@
 const convertBadgeResponse = (badgeResponse) => {
+	if (badgeResponse.length === 0) {
+		return null;
+	}
 	const badgeInfo = badgeResponse.reduce((previous, current) => {
 		const id = current.set_id;
 		const versions = current.versions.reduce((p, c) => {
