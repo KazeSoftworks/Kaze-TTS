@@ -10,6 +10,9 @@
 
 	&__author {
 		font-weight: bold;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 	}
 
 	&__text {

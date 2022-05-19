@@ -1,14 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getTwitchEmoteUrl, getBttvEmoteUrl } from '@utils/emoteHandler';
+import { useSelector } from 'react-redux';
 import '@scss/Message.scss';
 
 const Message = ({ message, index }) => {
+	const { globalBadges, chatBadges } = useSelector((state) => state.twitch);
 	const getMessageColor = () => {
 		if (message.color) {
 			return message.color;
 		}
 		return '#000';
+	};
+
+	const getAuthorBadges = () => {
+		const badgesComponent = [];
+		if (!message.badges) {
+			return badgesComponent;
+		}
+		Object.keys(message.badges).forEach((badge) => {
+			if (globalBadges[badge] && globalBadges[badge][message.badges[badge]]) {
+				badgesComponent.push(
+					<img
+						className="message__text__emote"
+						key={`${message.id}-${message.userId}-${badge}`}
+						src={globalBadges[badge][message.badges[badge]]}
+						alt={badge}
+						title={badge}
+					/>
+				);
+			} else if (
+				chatBadges[badge] &&
+				chatBadges[badge][message.badges[badge]]
+			) {
+				badgesComponent.push(
+					<img
+						className="message__text__emote"
+						key={`${message.id}-${message.userId}-${badge}`}
+						src={chatBadges[badge][message.badges[badge]]}
+						alt={badge}
+						title={badge}
+					/>
+				);
+			}
+		});
+
+		return badgesComponent;
 	};
 
 	const getMessage = () => {
@@ -45,6 +82,7 @@ const Message = ({ message, index }) => {
 	return (
 		<li className="message">
 			<span className="message__author" style={{ color: getMessageColor() }}>
+				{getAuthorBadges()}
 				{message.displayName}:
 			</span>
 			<span className="message__text">{getMessage()}</span>
@@ -55,7 +93,7 @@ const Message = ({ message, index }) => {
 Message.propTypes = {
 	index: PropTypes.number.isRequired,
 	message: PropTypes.shape({
-		badges: PropTypes.objectOf(PropTypes.string).isRequired,
+		badges: PropTypes.objectOf(PropTypes.string),
 		color: PropTypes.string,
 		displayName: PropTypes.string.isRequired,
 		emotes: PropTypes.objectOf(
