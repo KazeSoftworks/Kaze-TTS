@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getFollowers, getUser } from '@services/api';
+import { getFollowers, getUser, getGlobalChatBadges } from '@services/api';
+import convertBadgeResponse from '@utils/badgeHandler';
 
 const initialState = {
 	isLoadingUserInfo: false,
 	isLoadingFollowers: false,
+	isLoadingGlobalBadges: false,
 	displayName: '',
 	profileImageUrl: '',
 	followers: null,
+	globalBadges: null,
 	error: [],
 };
 
@@ -28,6 +31,18 @@ export const getFollowersInfo = createAsyncThunk(
 		const { token, userId } = getState().auth;
 		if (token) {
 			const response = getFollowers(token, userId);
+			return response;
+		}
+		throw new Error('No token');
+	}
+);
+
+export const getGlobalChatBadgesInfo = createAsyncThunk(
+	'twitch/getGlobalBadgesInfo',
+	async (__, { getState }) => {
+		const { token } = getState().auth;
+		if (token) {
+			const response = getGlobalChatBadges(token);
 			return response;
 		}
 		throw new Error('No token');
@@ -61,6 +76,18 @@ export const twitchSlice = createSlice({
 		},
 		[getFollowersInfo.pending]: (state) => {
 			state.isLoadingFollowers = true;
+		},
+
+		[getGlobalChatBadgesInfo.fulfilled]: (state, action) => {
+			state.isLoadingGlobalBadges = false;
+			state.globalBadges = convertBadgeResponse(action.payload);
+		},
+		[getGlobalChatBadgesInfo.rejected]: (state, action) => {
+			state.isLoadingGlobalBadges = false;
+			console.error(action.payload);
+		},
+		[getGlobalChatBadgesInfo.pending]: (state) => {
+			state.isLoadingGlobalBadges = true;
 		},
 	},
 });

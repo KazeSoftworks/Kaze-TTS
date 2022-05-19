@@ -5,7 +5,11 @@ import Header from '@components/Header';
 import '@scss/App.scss';
 import Chat from '@components/Chat';
 import { validateToken } from '@features/authSlice';
-import { getFollowersInfo, getUserInfo } from '@features/twichSlice';
+import {
+	getFollowersInfo,
+	getUserInfo,
+	getGlobalChatBadgesInfo,
+} from '@features/twichSlice';
 import Footer from '@components/Footer';
 import Loader from '@components/Loader';
 import getClient from '@utils/chat';
@@ -56,6 +60,10 @@ const App = () => {
 				})
 				.then(() => {
 					console.log('global emotes info loaded');
+					return dispatch(getGlobalChatBadgesInfo()).unwrap();
+				})
+				.then(() => {
+					console.log('global badges info loaded');
 					setLoading(false);
 					return dispatch(getGlobalBTTVEmotesInfo()).unwrap();
 				})

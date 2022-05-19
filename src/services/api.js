@@ -49,4 +49,14 @@ const getGlobalEmotes = async (token) => {
 		});
 };
 
-export { getUser, getFollowers, getGlobalEmotes };
+const getGlobalChatBadges = async (token) => {
+	return baseQuery('chat/badges/global', token)
+		.then((response) => {
+			return response.data.data;
+		})
+		.catch((error) => {
+			throw new Error(error.response.data);
+		});
+};
+
+export { getUser, getFollowers, getGlobalEmotes, getGlobalChatBadges };
