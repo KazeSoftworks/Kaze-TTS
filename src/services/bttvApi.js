@@ -16,8 +16,24 @@ const getGlobalBTTVEmotes = async () => {
 			return response.data;
 		})
 		.catch((error) => {
+			if (error.response.status === 404) {
+				return null;
+			}
 			throw new Error(error.response.data);
 		});
 };
 
-export default getGlobalBTTVEmotes;
+const getChannelBttvEmotes = async (userId) => {
+	return baseQuery(`users/twitch/${userId}`)
+		.then((response) => {
+			return response.data;
+		})
+		.catch((error) => {
+			if (error.response.status === 404) {
+				return null;
+			}
+			throw new Error(error.response.data);
+		});
+};
+
+export { getGlobalBTTVEmotes, getChannelBttvEmotes };

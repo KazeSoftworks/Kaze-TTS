@@ -1,14 +1,21 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { parseTwitchMessage } from '@utils/messageHandler';
 import { getGlobalEmotes } from '@services/api';
-import getGlobalBTTVEmotes from '@services/bttvApi';
-import { parseTwitchEmote, parseBttvEmote } from '@utils/emoteHandler';
+import { getGlobalBTTVEmotes, getChannelBttvEmotes } from '@services/bttvApi';
+import {
+	parseTwitchEmote,
+	parseBttvEmote,
+	parseChannelBttvEmote,
+} from '@utils/emoteHandler';
 
 const initialState = {
 	isLoadingGlobalEmotes: false,
 	isLoadingGlobalBTTVEmotes: false,
+	isLoadingChannelBttvEmotes: false,
+
 	globalEmotes: null,
 	bttvEmotes: null,
+	bttvChannelEmotes: null,
 
 	messages: [],
 	messagesList: [],
@@ -31,6 +38,18 @@ export const getGlobalBTTVEmotesInfo = createAsyncThunk(
 	async () => {
 		const response = await getGlobalBTTVEmotes();
 		return response;
+	}
+);
+
+export const getChannelBttvEmotesInfo = createAsyncThunk(
+	'messages/getChannelBttvEmotes',
+	async (__, { getState }) => {
+		const { userId } = getState().auth;
+		if (userId) {
+			const response = await getChannelBttvEmotes(userId);
+			return response;
+		}
+		throw new Error('No userId');
 	}
 );
 
@@ -72,6 +91,18 @@ export const messagesSlice = createSlice({
 		},
 		[getGlobalBTTVEmotesInfo.pending]: (state) => {
 			state.isLoadingGlobalBTTVEmotes = true;
+		},
+
+		[getChannelBttvEmotesInfo.fulfilled]: (state, action) => {
+			state.isLoadingChannelBttvEmotes = false;
+			state.bttvChannelEmotes = parseChannelBttvEmote(action.payload);
+		},
+		[getChannelBttvEmotesInfo.rejected]: (state, action) => {
+			state.isLoadingChannelBttvEmotes = false;
+			console.error(action.payload);
+		},
+		[getChannelBttvEmotesInfo.pending]: (state) => {
+			state.isLoadingChannelBttvEmotes = true;
 		},
 	},
 });

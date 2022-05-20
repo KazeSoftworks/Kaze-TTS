@@ -7,6 +7,9 @@ const getBttvEmoteUrl = (emoteId) => {
 };
 
 const parseBttvEmote = (response) => {
+	if (!response) {
+		return null;
+	}
 	const bbtv = {};
 	response.forEach((item) => {
 		if (item.code) {
@@ -26,4 +29,25 @@ const parseTwitchEmote = (response) => {
 	return twitch;
 };
 
-export { parseBttvEmote, parseTwitchEmote, getTwitchEmoteUrl, getBttvEmoteUrl };
+const parseChannelBttvEmote = (response) => {
+	if (!response) {
+		return null;
+	}
+	const bttv = {};
+	const { channelEmotes, sharedEmotes } = response;
+	sharedEmotes.forEach((item) => {
+		bttv[item.code] = item.id;
+	});
+	channelEmotes.forEach((item) => {
+		bttv[item.code] = item.id;
+	});
+	return bttv;
+};
+
+export {
+	parseBttvEmote,
+	parseTwitchEmote,
+	parseChannelBttvEmote,
+	getTwitchEmoteUrl,
+	getBttvEmoteUrl,
+};

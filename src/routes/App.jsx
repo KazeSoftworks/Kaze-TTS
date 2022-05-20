@@ -18,6 +18,7 @@ import {
 	addMessage,
 	getGlobalBTTVEmotesInfo,
 	getGlobalEmotesInfo,
+	getChannelBttvEmotesInfo,
 } from '@features/messagesSlice';
 
 const App = () => {
@@ -74,6 +75,11 @@ const App = () => {
 				})
 				.then(() => {
 					console.log('global BBTV info loaded');
+					setLoading(false);
+					return dispatch(getChannelBttvEmotesInfo()).unwrap();
+				})
+				.then(() => {
+					console.log('channel BBTV info loaded');
 					console.log('loading finished');
 					setChatClient(getClient(username, token));
 				});
