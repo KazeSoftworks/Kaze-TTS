@@ -58,7 +58,12 @@ export const messagesSlice = createSlice({
 	initialState,
 	reducers: {
 		addMessage: (state, action) => {
-			state.messages.push(parseTwitchMessage(action.payload, state.bttvEmotes));
+			state.messages.push(
+				parseTwitchMessage(action.payload, {
+					...state.bttvEmotes,
+					...state.bttvChannelEmotes,
+				})
+			);
 			state.messagesList.push(action.payload);
 		},
 		deleteMessage: (state, action) => {
