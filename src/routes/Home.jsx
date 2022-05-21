@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Layout from '@container/Layout';
-import Header from '@components/Header';
 import '@scss/App.scss';
 import Chat from '@components/Chat';
 import { validateToken } from '@features/authSlice';
@@ -11,7 +9,6 @@ import {
 	getGlobalChatBadgesInfo,
 	getChatBadgesInfo,
 } from '@features/twichSlice';
-import Footer from '@components/Footer';
 import Loader from '@components/Loader';
 import getClient from '@utils/chat';
 import {
@@ -21,7 +18,7 @@ import {
 	getChannelBttvEmotesInfo,
 } from '@features/messagesSlice';
 
-const App = () => {
+const Home = () => {
 	const dispatch = useDispatch();
 	const { username, token, isAuthenticated } = useSelector(
 		(state) => state.auth
@@ -103,15 +100,11 @@ const App = () => {
 	}, [chatClient, appLoaded]);
 
 	return (
-		<div className="App">
-			<Layout>
-				<Header />
-				<Chat />
-				<Footer />
-				{loading && <Loader />}
-			</Layout>
-		</div>
+		<>
+			<Chat />
+			{loading && <Loader />}
+		</>
 	);
 };
 
-export default App;
+export default Home;

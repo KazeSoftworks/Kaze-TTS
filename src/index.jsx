@@ -3,26 +3,29 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import App from '@routes/App';
+import Home from '@routes/Home';
 import store from '@features/store';
 // import reportWebVitals from '@reportWebVitals';
 import Twitch from '@routes/Twitch';
 import NotFound from '@routes/NotFound';
+import App from '@container/App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
 root.render(
-	<BrowserRouter>
-		<Provider store={store}>
+	<Provider store={store}>
+		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<App />} />
+				<Route path="/" element={<App />}>
+					<Route index element={<Home />} />
+				</Route>
 				<Route path="twitch" element={<Twitch />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
-		</Provider>
-	</BrowserRouter>
+		</BrowserRouter>
+	</Provider>
 );
 
 // If you want your app to work offline and load faster, you can change
