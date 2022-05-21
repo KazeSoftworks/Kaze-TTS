@@ -8,11 +8,13 @@ const Chat = () => {
 
 	return (
 		<div className="chat">
-			<ul>
-				{messages.map((message, index) => (
-					<Message index={index} key={message.id} message={message} />
-				))}
-			</ul>
+			<div className="chat__content">
+				<ul>
+					{messages.map((message, index) => (
+						<Message index={index} key={message.id} message={message} />
+					))}
+				</ul>
+			</div>
 		</div>
 	);
 };
