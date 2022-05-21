@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import '@scss/App.scss';
 import Chat from '@components/Chat';
 import { validateToken } from '@features/authSlice';
 import {

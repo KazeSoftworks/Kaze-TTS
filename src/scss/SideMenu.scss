@@ -1,0 +1,25 @@
+.side-menu {
+	width: 14rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__settings-button {
+		width: 90%;
+		padding: 0.5rem;
+		border: 0;
+		margin-top: 5px;
+		background-color: var(--normal-color);
+		color: var(--primary-font-color);
+		border-radius: 5px;
+		cursor: pointer;
+		transition: background-color 0.2s ease-in-out;
+
+		&:hover {
+			background-color: var(--normal-color-light);
+		}
+		&:active {
+			background-color: var(--normal-color-dark);
+		}
+	}
+}
