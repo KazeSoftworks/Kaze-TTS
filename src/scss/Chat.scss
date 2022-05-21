@@ -9,9 +9,18 @@
 		background-color: var(--chat-bg-color);
 		color: var(--primary-font-color);
 		overflow: auto;
-		margin: 10px;
-		padding: 0.5rem;
+		margin: 0.5rem;
 
+		&::-webkit-scrollbar {
+			width: 12px;
+			background-color: var(--normal-color-dark);
+			border-radius: 5px;
+		}
+		&::-webkit-scrollbar-thumb {
+			border-radius: 5px;
+			box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+			background-color: #555;
+		}
 		& ul {
 			margin: 0.5rem;
 			padding: 0;
