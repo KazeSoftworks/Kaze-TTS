@@ -15,6 +15,11 @@
 		align-items: center;
 	}
 
+	&__timestamp {
+		font-size: 0.7rem;
+		color: var(--normal-color-light);
+	}
+
 	&__text {
 		display: flex;
 		flex-direction: row;

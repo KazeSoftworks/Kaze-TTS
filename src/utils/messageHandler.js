@@ -87,4 +87,17 @@ const parseTwitchMessage = ({ tags, message }, bttvDictionary) => {
 		text: message,
 	};
 };
-export { containsBBTVEmotes, parseTwitchMessage };
+
+const formatTime = (ts) => {
+	const a = new Date(Number(ts));
+	const formattedNumber = (n) => (n < 10 ? `0${n}` : n);
+	const year = formattedNumber(a.getFullYear());
+	const month = formattedNumber(a.getMonth());
+	const date = formattedNumber(a.getDate());
+	const hour = formattedNumber(a.getHours());
+	const min = formattedNumber(a.getMinutes());
+	const sec = formattedNumber(a.getSeconds());
+	const time = `${date}/${month}/${year} ${hour}:${min}:${sec}`;
+	return time;
+};
+export { containsBBTVEmotes, parseTwitchMessage, formatTime };

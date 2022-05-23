@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getTwitchEmoteUrl, getBttvEmoteUrl } from '@utils/emoteHandler';
 import { useSelector } from 'react-redux';
 import '@scss/Message.scss';
+import { formatTime } from '@utils/messageHandler';
 
 const Message = ({ message, index }) => {
 	const { globalBadges, chatBadges } = useSelector((state) => state.twitch);
@@ -81,6 +82,7 @@ const Message = ({ message, index }) => {
 
 	return (
 		<li className="message">
+			<span className="message__timestamp">{formatTime(message.ts)}</span>
 			<span className="message__author" style={{ color: getMessageColor() }}>
 				{getAuthorBadges()}
 				{message.displayName}:
