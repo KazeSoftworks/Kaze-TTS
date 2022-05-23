@@ -68,6 +68,7 @@ const parseTwitchMessage = ({ tags, message }, bttvDictionary) => {
 		mod,
 		subscriber,
 		turbo,
+		username,
 	} = tags;
 
 	// const bttvDictionary = window.store.getState().twitch.betterTTVEmotes;
@@ -84,6 +85,7 @@ const parseTwitchMessage = ({ tags, message }, bttvDictionary) => {
 		mod,
 		subscriber,
 		turbo,
+		username,
 		vip: badges ? !!badges.vip : false,
 		broadcaster: badges ? !!badges.broadcaster : false,
 		text: message,
