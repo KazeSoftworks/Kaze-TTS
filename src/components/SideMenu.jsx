@@ -2,6 +2,7 @@ import React from 'react';
 import '@scss/SideMenu.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
+import Chatters from './Chatters';
 
 const SideMenu = () => {
 	return (
@@ -9,6 +10,7 @@ const SideMenu = () => {
 			<button type="button" className="side-menu__settings-button">
 				<FontAwesomeIcon icon={faGear} /> Settings
 			</button>
+			<Chatters />
 		</div>
 	);
 };

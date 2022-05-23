@@ -17,6 +17,7 @@ const initialState = {
 	followers: null,
 	globalBadges: null,
 	chatBadges: null,
+	chatters: null,
 	error: [],
 };
 
