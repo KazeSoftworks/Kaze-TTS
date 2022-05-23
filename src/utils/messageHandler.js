@@ -84,6 +84,8 @@ const parseTwitchMessage = ({ tags, message }, bttvDictionary) => {
 		mod,
 		subscriber,
 		turbo,
+		vip: badges ? !!badges.vip : false,
+		broadcaster: badges ? !!badges.broadcaster : false,
 		text: message,
 	};
 };
