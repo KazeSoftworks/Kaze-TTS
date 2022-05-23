@@ -7,6 +7,8 @@ import {
 	getUserInfo,
 	getGlobalChatBadgesInfo,
 	getChatBadgesInfo,
+	addChatter,
+	removeChatter,
 } from '@features/twichSlice';
 import Loader from '@components/Loader';
 import getClient from '@utils/chat';
@@ -16,6 +18,7 @@ import {
 	getGlobalEmotesInfo,
 	getChannelBttvEmotesInfo,
 } from '@features/messagesSlice';
+import { parseTwitchMessage } from '@utils/messageHandler';
 
 const Home = () => {
 	const dispatch = useDispatch();
@@ -87,12 +90,29 @@ const Home = () => {
 			chatClient.connect().catch((err) => {
 				console.error(err);
 			});
-			chatClient.on('message', (channel, tags, message, self) => {
+			chatClient.on('message', (__, tags, message, self) => {
 				// Ignore echoed messages.
 				if (self) {
 					return;
 				}
+				if (tags.username !== username) {
+					dispatch(addChatter(parseTwitchMessage({ tags })));
+				}
 				dispatch(addMessage({ tags, message }));
+			});
+			chatClient.on('join', (__, user, self) => {
+				// Ignore echoed messages.
+				if (self) {
+					return;
+				}
+				dispatch(addChatter({ username: user, isLurker: true }));
+			});
+			chatClient.on('part', (__, user, self) => {
+				// Ignore echoed messages.
+				if (self) {
+					return;
+				}
+				dispatch(removeChatter(user));
 			});
 			setAppLoaded(true);
 		}

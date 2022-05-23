@@ -17,8 +17,9 @@ const initialState = {
 	followers: null,
 	globalBadges: null,
 	chatBadges: null,
-	chatters: null,
 	error: [],
+
+	chatters: {},
 };
 
 export const getUserInfo = createAsyncThunk(
@@ -72,6 +73,43 @@ export const getChatBadgesInfo = createAsyncThunk(
 export const twitchSlice = createSlice({
 	name: 'twitch',
 	initialState,
+	reducers: {
+		addChatter: (state, action) => {
+			const {
+				username,
+				displayName,
+				broadcaster,
+				mod,
+				vip,
+				subscriber,
+				isLurker,
+			} = action.payload;
+			// Never add broadcaster
+			if (broadcaster || username === state.displayName.toLowerCase()) {
+				return;
+			}
+			// If user was already added to the chatters list but is added as lurker later, ignore them
+			if (
+				state.chatters[username] &&
+				!state.chatters[username].isLurker &&
+				isLurker
+			) {
+				return;
+			}
+			state.chatters[username] = {
+				username,
+				displayName,
+				broadcaster,
+				mod,
+				vip,
+				subscriber,
+				isLurker,
+			};
+		},
+		removeChatter: (state, action) => {
+			delete state.chatters[action.payload];
+		},
+	},
 	extraReducers: {
 		[getUserInfo.fulfilled]: (state, action) => {
 			state.isLoadingUserInfo = false;
@@ -123,5 +161,5 @@ export const twitchSlice = createSlice({
 		},
 	},
 });
-
+export const { addChatter, removeChatter } = twitchSlice.actions;
 export default twitchSlice.reducer;
