@@ -28,7 +28,6 @@
 			background-color: var(--normal-color-light);
 			border-bottom: 0.1rem solid var(--normal-color-dark);
 			&__title {
-				height: 2rem;
 				width: 100%;
 				display: flex;
 				gap: 0.5rem;
@@ -37,17 +36,38 @@
 				border-bottom: 0.1rem solid var(--normal-color-dark);
 			}
 			&__category {
-				height: 1.5rem;
 				width: 100%;
-				display: flex;
-				gap: 0.5rem;
-				justify-content: center;
-				align-items: center;
 				border-bottom: 0.1rem solid var(--normal-color-dark);
+				&--mod {
+					background-color: var(--moderator-color);
+					li {
+						background-color: var(--chat-bg-color-light);
+					}
+					li:nth-child(odd) {
+						background-color: var(--chat-bg-color-dark);
+					}
+				}
+				&__title {
+					display: flex;
+					gap: 0.5rem;
+					justify-content: center;
+					align-items: center;
+					height: 2rem;
+				}
+				&__list {
+					list-style-type: none;
+					padding: 0;
+					li {
+						display: flex;
+						justify-content: start;
+						padding: 0.25rem 0.25rem 0 0;
+						padding-left: 0.5rem;
+					}
+				}
 			}
-			img {
-				height: 16px;
-			}
+		}
+		img {
+			height: 16px;
 		}
 	}
 }
