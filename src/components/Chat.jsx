@@ -4,7 +4,7 @@ import '@scss/Chat.scss';
 import Message from './Message';
 
 const Chat = () => {
-	const { messages } = useSelector((state) => state.messages);
+	const messages = useSelector((state) => state.messages.messages);
 
 	return (
 		<div className="chat">

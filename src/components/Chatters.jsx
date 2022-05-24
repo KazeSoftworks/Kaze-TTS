@@ -9,8 +9,8 @@ import ChatterBadge from '@assets/Chatter Badge.svg';
 import LurkerBadge from '@assets/Lurker Badge.svg';
 
 const Chatters = () => {
-	const { isAuthenticated } = useSelector((state) => state.auth);
-	const { globalBadges, chatters } = useSelector((state) => state.twitch);
+	const globalBadges = useSelector((state) => state.twitch.globalBadges);
+	const chatters = useSelector((state) => state.twitch.chatters);
 	const dispatch = useDispatch();
 
 	const getModeratorsList = () => {

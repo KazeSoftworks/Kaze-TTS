@@ -6,7 +6,8 @@ import '@scss/Message.scss';
 import { formatTime } from '@utils/messageHandler';
 
 const Message = ({ message, index }) => {
-	const { globalBadges, chatBadges } = useSelector((state) => state.twitch);
+	const globalBadges = useSelector((state) => state.twitch.globalBadges);
+	const chatBadges = useSelector((state) => state.twitch.chatBadges);
 	const getMessageColor = () => {
 		if (message.color) {
 			return message.color;

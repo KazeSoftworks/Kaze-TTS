@@ -17,7 +17,7 @@ const Header = () => {
 	const { isAuthenticated, isLoadingValidate, isLoadingRevoke } = useSelector(
 		(state) => state.auth
 	);
-	const { profileImageUrl } = useSelector((state) => state.twitch);
+	const profileImageUrl = useSelector((state) => state.twitch.profileImageUrl);
 
 	const handleLogin = () => {
 		window.location.href = AUTH_URI;
