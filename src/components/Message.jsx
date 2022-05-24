@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { getTwitchEmoteUrl, getBttvEmoteUrl } from '@utils/emoteHandler';
 import { useSelector } from 'react-redux';
 import '@scss/Message.scss';
 import { formatTime } from '@utils/messageHandler';
 
-const Message = ({ message, index }) => {
+const Message = ({ message }) => {
 	const globalBadges = useSelector((state) => state.twitch.globalBadges);
 	const chatBadges = useSelector((state) => state.twitch.chatBadges);
 	const getMessageColor = () => {
@@ -94,7 +94,6 @@ const Message = ({ message, index }) => {
 };
 
 Message.propTypes = {
-	index: PropTypes.number.isRequired,
 	message: PropTypes.shape({
 		badges: PropTypes.objectOf(PropTypes.string),
 		color: PropTypes.string,
@@ -121,4 +120,4 @@ Message.propTypes = {
 	}).isRequired,
 };
 
-export default Message;
+export default memo(Message);

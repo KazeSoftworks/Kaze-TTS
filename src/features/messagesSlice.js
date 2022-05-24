@@ -18,7 +18,6 @@ const initialState = {
 	bttvChannelEmotes: null,
 
 	messages: [],
-	messagesList: [],
 };
 
 export const getGlobalEmotesInfo = createAsyncThunk(
@@ -64,7 +63,6 @@ export const messagesSlice = createSlice({
 					...state.bttvChannelEmotes,
 				})
 			);
-			state.messagesList.push(action.payload);
 		},
 		deleteMessage: (state, action) => {
 			const removeIndex = state.messages
