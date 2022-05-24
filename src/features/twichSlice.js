@@ -96,15 +96,33 @@ export const twitchSlice = createSlice({
 			) {
 				return;
 			}
-			state.chatters[username] = {
-				username,
-				displayName,
-				broadcaster,
-				mod,
-				vip,
-				subscriber,
-				isLurker,
-			};
+			// If user is in list and there is no other changes on it, ignore it
+			if (
+				state.chatters[username] &&
+				JSON.stringify(state.chatters[username]) ===
+					JSON.stringify({
+						username,
+						displayName,
+						broadcaster,
+						mod,
+						vip,
+						subscriber,
+						isLurker,
+					})
+			) {
+				return;
+			}
+			Object.assign(state.chatters, {
+				[username]: {
+					username,
+					displayName,
+					broadcaster,
+					mod,
+					vip,
+					subscriber,
+					isLurker,
+				},
+			});
 		},
 		removeChatter: (state, action) => {
 			delete state.chatters[action.payload];
