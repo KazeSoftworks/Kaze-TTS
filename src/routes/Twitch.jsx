@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { AUTH_URI, VALIDATE_URI } from '@utils/constants';
+import { AUTH_URI, VALIDATE_URI, PATH_HOME } from '@utils/constants';
 import { setAuth } from '@features/authSlice';
 
 const Twitch = () => {
@@ -37,7 +37,7 @@ const Twitch = () => {
 							token: getQuery(hash).access_token,
 						})
 					);
-					navigate('/');
+					navigate(PATH_HOME);
 				})
 				.catch((err) => {
 					console.log('Error: ', err);
@@ -59,6 +59,18 @@ const Twitch = () => {
 							onClick={() => window.open(AUTH_URI, '_self')}
 						>
 							Retry
+						</button>
+					</div>
+				</>
+			)}
+			{!search && !hash && (
+				<>
+					<div>
+						Tienes que ingresar a la página de Twitch para acceder a la app.
+					</div>
+					<div>
+						<button type="button" onClick={() => navigate(PATH_HOME)}>
+							Regresar
 						</button>
 					</div>
 				</>

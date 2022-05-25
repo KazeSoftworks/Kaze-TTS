@@ -3,12 +3,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@components/Button';
 import '@scss/NotFound.scss';
+import { PATH_HOME } from '@utils/constants';
 
 const NotFound = () => {
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		navigate('/');
+		navigate(PATH_HOME);
 	};
 
 	return (

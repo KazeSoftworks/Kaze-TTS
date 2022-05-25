@@ -12,3 +12,7 @@ export const ID_API = 'https://id.twitch.tv/oauth2/';
 export const API = 'https://api.twitch.tv/helix/';
 
 export const BTTV_API = 'https://api.betterttv.net/3/cached/';
+
+export const PATH_HOME = '/';
+export const PATH_TWITCH = '/twitch';
+export const PATH_SETTINGS = '/settings';
