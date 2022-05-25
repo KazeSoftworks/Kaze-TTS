@@ -1,0 +1,36 @@
+.chatters-list {
+	width: 100%;
+	border-bottom: 0.1rem solid var(--normal-color-dark);
+	&__title {
+		display: flex;
+		gap: 0.5rem;
+		justify-content: center;
+		align-items: center;
+		height: 2rem;
+	}
+	&__list {
+		list-style-type: none;
+		padding: 0;
+		li {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+			background-color: var(--chat-bg-color-light);
+		}
+		li:nth-child(odd) {
+			background-color: var(--chat-bg-color-dark);
+		}
+	}
+
+	&--mod {
+		background-color: var(--moderator-color);
+	}
+	&--vip {
+		background-color: var(--vip-color);
+	}
+	&--sub {
+		background-color: var(--sub-color);
+	}
+}

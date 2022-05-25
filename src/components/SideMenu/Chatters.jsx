@@ -1,85 +1,98 @@
-import { getChattersInfo } from '@features/twichSlice';
-import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import '@scss/Chatters.scss';
-import { faTwitch } from '@fortawesome/free-brands-svg-icons';
-import ChatterBadge from '@assets/Chatter Badge.svg';
-import LurkerBadge from '@assets/Lurker Badge.svg';
+import ChattersList from './ChattersList';
 
 const Chatters = () => {
 	const globalBadges = useSelector((state) => state.twitch.globalBadges);
-	const chatters = useSelector((state) => state.twitch.chatters);
-	const dispatch = useDispatch();
+	const chatterList = useSelector((state) => state.twitch.chatters);
+	const [moderators, setModerators] = useState([]);
+	const [vips, setVips] = useState([]);
+	const [subscribers, setSubscribers] = useState([]);
+	const [filteredSubscribers, setFilteredSubscribers] = useState([]);
+	const [chatters, setChatters] = useState([]);
+	const [lurker, setLurker] = useState([]);
 
-	const getModeratorsList = () => {
-		const moderators = [];
-		const chattersList = Object.keys(chatters);
-		chattersList.forEach((chatter) => {
-			if (chatters[chatter].mod) {
-				moderators.push(chatters[chatter]);
+	useEffect(() => {
+		const modPrep = [];
+		const vipPrep = [];
+		const subPrep = [];
+		const chatterPrep = [];
+		const lurkerPrep = [];
+		Object.keys(chatterList).forEach((chatter) => {
+			if (chatterList[chatter].mod) {
+				modPrep.push(
+					chatterList[chatter].displayName || chatterList[chatter].username
+				);
+			} else if (chatterList[chatter].vip) {
+				vipPrep.push(
+					chatterList[chatter].displayName || chatterList[chatter].username
+				);
+			} else if (chatterList[chatter].subscriber) {
+				subPrep.push(
+					chatterList[chatter].displayName || chatterList[chatter].username
+				);
+			} else if (!chatterList[chatter].isLurker) {
+				chatterPrep.push(
+					chatterList[chatter].displayName || chatterList[chatter].username
+				);
+			} else {
+				lurkerPrep.push(chatterList[chatter].username);
 			}
 		});
-		if (moderators.length === 0) {
-			return null;
-		}
-		return (
-			<div className="chatters__body__chatters__category chatters__body__chatters__category--mod">
-				<div className="chatters__body__chatters__category__title">
-					{globalBadges && globalBadges.moderator && (
-						<img src={globalBadges.moderator[1]} alt="Moderator badge" />
-					)}
-					Moderators
-				</div>
-				<ul className="chatters__body__chatters__category__list">
-					{moderators.map((moderator) => (
-						<li key={`chatter-${moderator.username}`}>
-							{moderator.displayName || moderator.username}
-						</li>
-					))}
-				</ul>
-			</div>
-		);
-	};
+
+		const filteredSubs = subPrep
+			.filter((el) => !vipPrep.includes(el))
+			.filter((el) => !modPrep.includes(el));
+
+		setModerators(modPrep);
+		setVips(vipPrep);
+		setSubscribers(subPrep);
+		setChatters(chatterPrep);
+		setLurker(lurkerPrep);
+		setFilteredSubscribers(filteredSubs);
+	}, [chatterList]);
 
 	return (
 		<div className="chatters">
 			<div className="chatters__header">In Channel</div>
 			<div className="chatters__body">
 				<div className="chatters__body__chatters">
-					{getModeratorsList()}
-
-					<div className="chatters__body__chatters__category">
-						<div className="chatters__body__chatters__category__title">
-							{globalBadges && globalBadges.vip && (
-								<img src={globalBadges.vip[1]} alt="Vip Badge" />
-							)}
-							VIP
-						</div>
-					</div>
-
-					<div className="chatters__body__chatters__category">
-						<div className="chatters__body__chatters__category__title">
-							{globalBadges && globalBadges.subscriber && (
-								<img src={globalBadges.subscriber[1]} alt="Sub badge" />
-							)}
-							Subscriber
-						</div>
-					</div>
-
-					<div className="chatters__body__chatters__category">
-						<div className="chatters__body__chatters__category__title">
-							<img src={ChatterBadge} alt="Chatter Badge" /> Chatters
-						</div>
-					</div>
-
-					<div className="chatters__body__chatters__category">
-						<div className="chatters__body__chatters__category__title">
-							<img src={LurkerBadge} alt="Lurker Badge" />
-							Lurker
-						</div>
-					</div>
+					{/* {getModeratorsList()} */}
+					{moderators.length > 0 && (
+						<ChattersList
+							users={moderators}
+							subscribers={subscribers}
+							category="mod"
+							badges={globalBadges}
+						/>
+					)}
+					{vips.length > 0 && (
+						<ChattersList
+							users={vips}
+							subscribers={subscribers}
+							category="vip"
+							badges={globalBadges}
+						/>
+					)}
+					{filteredSubscribers.length > 0 && (
+						<ChattersList
+							users={filteredSubscribers}
+							category="subscriber"
+							badges={globalBadges}
+						/>
+					)}
+					{chatters.length > 0 && (
+						<ChattersList
+							users={chatters}
+							subscribers={subscribers}
+							category="chatter"
+							badges={globalBadges}
+						/>
+					)}
+					{lurker.length > 0 && (
+						<ChattersList users={lurker} badges={globalBadges} />
+					)}
 				</div>
 			</div>
 		</div>
