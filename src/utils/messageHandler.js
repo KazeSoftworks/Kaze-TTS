@@ -72,11 +72,10 @@ const parseTwitchMessage = ({ tags, message }, bttvDictionary) => {
 	} = tags;
 
 	// const bttvDictionary = window.store.getState().twitch.betterTTVEmotes;
-
 	return {
 		badges,
 		color,
-		emotes: containsTwitchEmotes(message, emotes),
+		emotes: message ? containsTwitchEmotes(message, emotes) : null,
 		emotesBBTV: containsBBTVEmotes(message, bttvDictionary),
 		displayName,
 		userId,
