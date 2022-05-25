@@ -2,14 +2,23 @@ import React from 'react';
 import '@scss/SideMenu.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { PATH_HOME, PATH_SETTINGS } from '@utils/constants';
 import Chatters from './Chatters';
 
 const SideMenu = () => {
 	const location = useLocation();
+	const navigate = useNavigate();
 
 	const handleOptions = () => {
-		console.log(location);
+		switch (location.pathname) {
+			case PATH_SETTINGS:
+				navigate(PATH_HOME);
+				break;
+			default:
+				navigate(PATH_SETTINGS);
+				break;
+		}
 	};
 
 	return (

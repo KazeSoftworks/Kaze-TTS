@@ -9,7 +9,8 @@ import store from '@features/store';
 import Twitch from '@routes/Twitch';
 import NotFound from '@routes/NotFound';
 import App from '@container/App';
-import { PATH_HOME, PATH_TWITCH } from '@utils/constants';
+import { PATH_HOME, PATH_TWITCH, PATH_SETTINGS } from '@utils/constants';
+import Settings from '@routes/Settings';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const rootElement = document.getElementById('root');
@@ -21,6 +22,7 @@ root.render(
 			<Routes>
 				<Route path={PATH_HOME} element={<App />}>
 					<Route index element={<Home />} />
+					<Route path={PATH_SETTINGS} element={<Settings />} />
 				</Route>
 				<Route path={PATH_TWITCH} element={<Twitch />} />
 				<Route path="*" element={<NotFound />} />
