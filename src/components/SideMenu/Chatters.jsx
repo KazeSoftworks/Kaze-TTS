@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { useSelector } from 'react-redux';
 import '@scss/Chatters.scss';
 import ChattersList from './ChattersList';
@@ -99,4 +99,4 @@ const Chatters = () => {
 	);
 };
 
-export default Chatters;
+export default memo(Chatters);
