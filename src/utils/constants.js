@@ -16,3 +16,4 @@ export const BTTV_API = 'https://api.betterttv.net/3/cached/';
 export const PATH_HOME = '/';
 export const PATH_TWITCH = '/twitch';
 export const PATH_SETTINGS = '/settings';
+export const PATH_SETTINGS_FILTER = `${PATH_SETTINGS}/filter`;
