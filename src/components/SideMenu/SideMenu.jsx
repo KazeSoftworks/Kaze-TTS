@@ -12,11 +12,11 @@ const SideMenu = () => {
 
 	const handleOptions = (pathname) => {
 		switch (pathname) {
-			case PATH_SETTINGS:
-				navigate(PATH_HOME);
+			case PATH_HOME:
+				navigate(PATH_SETTINGS);
 				break;
 			default:
-				navigate(PATH_SETTINGS);
+				navigate(PATH_HOME);
 				break;
 		}
 	};
