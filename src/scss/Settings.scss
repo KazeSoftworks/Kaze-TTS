@@ -3,4 +3,42 @@
 	height: calc(100vh - var(--header-height) - var(--footer-height));
 	display: flex;
 	flex-direction: column;
+	ul {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		list-style-type: none;
+		margin: 0.5rem 0.5rem 0 0.5rem;
+		padding: 0;
+	}
+
+	li a {
+		display: block;
+		padding: 0.5rem;
+		min-width: 5rem;
+		text-align: center;
+	}
+
+	li:first-child {
+		& a {
+			border-top-left-radius: 1rem;
+		}
+	}
+
+	li:last-child {
+		& a {
+			border-top-right-radius: 1rem;
+		}
+	}
+
+	nav a {
+		text-decoration: none;
+		color: var(--primary-font-color);
+		background-color: var(--normal-color-dark);
+		margin: 0;
+
+		&.active {
+			background-color: var(--normal-color-light);
+		}
+	}
 }

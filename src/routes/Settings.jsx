@@ -2,6 +2,7 @@ import React from 'react';
 import '@scss/Settings.scss';
 import { NavLink, Outlet } from 'react-router-dom';
 import { PATH_SETTINGS, PATH_SETTINGS_FILTER } from '@utils/constants';
+import SettingContainer from '@container/SettingContainer';
 
 const Settings = () => {
 	return (
@@ -9,14 +10,18 @@ const Settings = () => {
 			<nav>
 				<ul>
 					<li>
-						<NavLink to={PATH_SETTINGS}>Voice</NavLink>
+						<NavLink to={PATH_SETTINGS} end>
+							Voice
+						</NavLink>
 					</li>
 					<li>
 						<NavLink to={PATH_SETTINGS_FILTER}>Filter</NavLink>
 					</li>
 				</ul>
 			</nav>
-			<Outlet />
+			<SettingContainer>
+				<Outlet />
+			</SettingContainer>
 		</div>
 	);
 };

@@ -17,6 +17,7 @@ import {
 } from '@utils/constants';
 import Settings from '@routes/Settings';
 import VoiceSettings from '@routes/VoiceSettings';
+import FilterSettings from '@routes/FilterSettings';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const rootElement = document.getElementById('root');
@@ -30,7 +31,7 @@ root.render(
 					<Route index element={<Home />} />
 					<Route path={PATH_SETTINGS} element={<Settings />}>
 						<Route index element={<VoiceSettings />} />
-						<Route path={PATH_SETTINGS_FILTER} element={<VoiceSettings />} />
+						<Route path={PATH_SETTINGS_FILTER} element={<FilterSettings />} />
 						<Route path="*" element={<Navigate to={PATH_SETTINGS} />} />
 					</Route>
 				</Route>
