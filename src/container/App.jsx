@@ -10,6 +10,7 @@ import {
 	getUserInfo,
 	getGlobalChatBadgesInfo,
 	getChatBadgesInfo,
+	setLoadingChat,
 } from '@features/twichSlice';
 import setTmiClient from '@utils/chat';
 import {
@@ -62,6 +63,7 @@ const App = () => {
 				.then(() => {
 					console.log('channel BBTV info loaded');
 					console.log('loading finished');
+					dispatch(setLoadingChat(true));
 					setTmiClient({ username, token, dispatch });
 				});
 		}

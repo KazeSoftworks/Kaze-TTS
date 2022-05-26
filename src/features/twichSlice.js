@@ -12,6 +12,7 @@ const initialState = {
 	isLoadingFollowers: false,
 	isLoadingGlobalBadges: false,
 	isLoadingChatBadges: false,
+	isLoadingChat: false,
 	displayName: '',
 	profileImageUrl: '',
 	followers: null,
@@ -127,6 +128,9 @@ export const twitchSlice = createSlice({
 		removeChatter: (state, action) => {
 			delete state.chatters[action.payload];
 		},
+		setLoadingChat: (state, action) => {
+			state.isLoadingChat = action.payload;
+		},
 	},
 	extraReducers: {
 		[getUserInfo.fulfilled]: (state, action) => {
@@ -179,5 +183,6 @@ export const twitchSlice = createSlice({
 		},
 	},
 });
-export const { addChatter, removeChatter } = twitchSlice.actions;
+export const { addChatter, removeChatter, setLoadingChat } =
+	twitchSlice.actions;
 export default twitchSlice.reducer;

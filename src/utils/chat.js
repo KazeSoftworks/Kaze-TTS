@@ -1,5 +1,9 @@
 import { addMessage } from '@features/messagesSlice';
-import { addChatter, removeChatter } from '@features/twichSlice';
+import {
+	addChatter,
+	removeChatter,
+	setLoadingChat,
+} from '@features/twichSlice';
 import tmi from 'tmi.js';
 import { parseTwitchMessage } from './messageHandler';
 
@@ -13,9 +17,15 @@ const setTmiClient = ({ username, token, dispatch = () => {} }) => {
 		channels: [username],
 		messagesLogLevel: 'info',
 	});
-	client.connect().catch((err) => {
-		console.error(err);
-	});
+	client
+		.connect()
+		.then(() => {
+			dispatch(setLoadingChat(false));
+		})
+		.catch((err) => {
+			console.error(err);
+			dispatch(setLoadingChat(false));
+		});
 	client.on('message', (__, tags, message, self) => {
 		if (self) {
 			return;
