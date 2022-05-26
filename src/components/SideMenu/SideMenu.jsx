@@ -1,7 +1,7 @@
 import React from 'react';
 import '@scss/SideMenu.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { faCommentDots, faGear } from '@fortawesome/free-solid-svg-icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PATH_HOME, PATH_SETTINGS } from '@utils/constants';
 import Chatters from './Chatters';
@@ -10,8 +10,8 @@ const SideMenu = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
-	const handleOptions = () => {
-		switch (location.pathname) {
+	const handleOptions = (pathname) => {
+		switch (pathname) {
 			case PATH_SETTINGS:
 				navigate(PATH_HOME);
 				break;
@@ -26,9 +26,17 @@ const SideMenu = () => {
 			<button
 				type="button"
 				className="side-menu__settings-button"
-				onClick={handleOptions}
+				onClick={() => handleOptions(location.pathname)}
 			>
-				<FontAwesomeIcon icon={faGear} /> Settings
+				{location.pathname === PATH_HOME ? (
+					<>
+						<FontAwesomeIcon icon={faGear} /> Settings
+					</>
+				) : (
+					<>
+						<FontAwesomeIcon icon={faCommentDots} /> Chat
+					</>
+				)}
 			</button>
 			<Chatters />
 		</div>
