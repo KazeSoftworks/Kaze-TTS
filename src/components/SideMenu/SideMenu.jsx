@@ -1,14 +1,23 @@
 import React from 'react';
 import '@scss/SideMenu.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentDots, faGear } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCommentDots,
+	faGear,
+	faPlay,
+	faStop,
+} from '@fortawesome/free-solid-svg-icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PATH_HOME, PATH_SETTINGS } from '@utils/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAudioEnabled } from '@features/settingsSlice';
 import Chatters from './Chatters';
 
 const SideMenu = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const audioEnabled = useSelector((state) => state.settings.audioEnabled);
 
 	const handleOptions = (pathname) => {
 		switch (pathname) {
@@ -19,6 +28,10 @@ const SideMenu = () => {
 				navigate(PATH_HOME);
 				break;
 		}
+	};
+
+	const handleAudioEngine = () => {
+		dispatch(setAudioEnabled(!audioEnabled));
 	};
 
 	return (
@@ -35,6 +48,21 @@ const SideMenu = () => {
 				) : (
 					<>
 						<FontAwesomeIcon icon={faCommentDots} /> Chat
+					</>
+				)}
+			</button>
+			<button
+				type="button"
+				className="side-menu__settings-button"
+				onClick={handleAudioEngine}
+			>
+				{audioEnabled ? (
+					<>
+						<FontAwesomeIcon icon={faStop} /> Stop Audio
+					</>
+				) : (
+					<>
+						<FontAwesomeIcon icon={faPlay} /> Start Audio
 					</>
 				)}
 			</button>
