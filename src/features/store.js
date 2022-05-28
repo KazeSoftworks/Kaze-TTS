@@ -3,6 +3,7 @@ import logger from 'redux-logger';
 import messagesReducer from './messagesSlice';
 import authReducer, { initialState } from './authSlice';
 import twitchReducer from './twichSlice';
+import settingsReducer from './settingsSlice';
 
 const authMiddleware = (store) => (next) => (action) => {
 	const result = next(action);
@@ -26,6 +27,7 @@ const store = configureStore({
 		messages: messagesReducer,
 		auth: authReducer,
 		twitch: twitchReducer,
+		settings: settingsReducer,
 	},
 	preloadedState: reHydrateStore(),
 	middleware: (getDefaultMiddleware) =>
