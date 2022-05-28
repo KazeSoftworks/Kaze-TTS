@@ -7,7 +7,12 @@ import {
 import tmi from 'tmi.js';
 import { parseTwitchMessage } from './messageHandler';
 
-const setTmiClient = ({ username, token, dispatch = () => {} }) => {
+const setTmiClient = ({
+	username,
+	token,
+	dispatch = () => {},
+	audioEnabled,
+}) => {
 	const client = new tmi.Client({
 		options: { skipUpdatingEmotesets: true, debug: true },
 		identity: {
@@ -32,6 +37,9 @@ const setTmiClient = ({ username, token, dispatch = () => {} }) => {
 		}
 		if (tags.username !== username) {
 			dispatch(addChatter(parseTwitchMessage({ tags })));
+		}
+		if (audioEnabled) {
+			// Dispatch message to audio reader redux
 		}
 		dispatch(addMessage({ tags, message }));
 	});

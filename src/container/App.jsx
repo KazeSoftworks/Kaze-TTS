@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import { Outlet } from 'react-router-dom';
@@ -19,6 +19,7 @@ import {
 	getChannelBttvEmotesInfo,
 } from '@features/messagesSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import AudioEngine from '@components/AudioEngine';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -73,6 +74,7 @@ const App = () => {
 		<>
 			<Header />
 			<div className="content-container">
+				<AudioEngine />
 				<Outlet />
 				<SideMenu />
 			</div>
