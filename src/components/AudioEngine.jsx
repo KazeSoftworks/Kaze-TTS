@@ -4,7 +4,7 @@ import {
 	setGeneralVoiceRate,
 	setVoices,
 } from '@features/settingsSlice';
-import { shiftTTSMessage } from 'features/messagesSlice';
+import { shiftTTSMessage } from '@features/messagesSlice';
 import React, { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
