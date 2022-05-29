@@ -10,9 +10,7 @@ import {
 	getUserInfo,
 	getGlobalChatBadgesInfo,
 	getChatBadgesInfo,
-	setLoadingChat,
 } from '@features/twichSlice';
-import setTmiClient from '@utils/chat';
 import {
 	getGlobalBTTVEmotesInfo,
 	getGlobalEmotesInfo,
@@ -20,6 +18,7 @@ import {
 } from '@features/messagesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import AudioEngine from '@components/AudioEngine';
+import ClientEngine from '@components/ClientEngine';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -64,8 +63,6 @@ const App = () => {
 				.then(() => {
 					console.log('channel BBTV info loaded');
 					console.log('loading finished');
-					dispatch(setLoadingChat(true));
-					setTmiClient({ username, token, dispatch });
 				});
 		}
 	}, [isAuthenticated, dispatch]);
@@ -75,6 +72,7 @@ const App = () => {
 			<Header />
 			<div className="content-container">
 				<AudioEngine />
+				{isAuthenticated && <ClientEngine username={username} token={token} />}
 				<Outlet />
 				<SideMenu />
 			</div>

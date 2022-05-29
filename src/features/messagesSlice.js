@@ -18,6 +18,7 @@ const initialState = {
 	bttvChannelEmotes: null,
 
 	messages: [],
+	ttsMessages: [],
 };
 
 export const getGlobalEmotesInfo = createAsyncThunk(
@@ -70,6 +71,14 @@ export const messagesSlice = createSlice({
 				.indexOf(action.payload.userstate['target-msg-id']);
 			state.messages.splice(removeIndex, 1);
 		},
+		addTTSMessage: (state, action) => {
+			state.ttsMessages.push(
+				parseTwitchMessage(action.payload, {
+					...state.bttvEmotes,
+					...state.bttvChannelEmotes,
+				})
+			);
+		},
 	},
 	extraReducers: {
 		[getGlobalEmotesInfo.fulfilled]: (state, action) => {
@@ -110,5 +119,6 @@ export const messagesSlice = createSlice({
 	},
 });
 
-export const { addMessage, deleteMessage } = messagesSlice.actions;
+export const { addMessage, deleteMessage, addTTSMessage } =
+	messagesSlice.actions;
 export default messagesSlice.reducer;
