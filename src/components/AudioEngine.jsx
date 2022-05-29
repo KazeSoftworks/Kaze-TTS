@@ -4,6 +4,7 @@ import {
 	setGeneralVoiceRate,
 	setVoices,
 } from '@features/settingsSlice';
+import { shiftTTSMessage } from 'features/messagesSlice';
 import React, { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,6 +16,7 @@ const AudioEngine = () => {
 	);
 	const [localVoiceList, setLocalVoiceList] = useState([]);
 	const audioEnabled = useSelector((state) => state.settings.audioEnabled);
+	const ttsMessages = useSelector((state) => state.messages.ttsMessages);
 
 	const speak = (text, voice, lang, rate, pitch) => {
 		const utterance = new SpeechSynthesisUtterance(text);
@@ -51,18 +53,14 @@ const AudioEngine = () => {
 	}, [audioEnabled]);
 
 	useEffect(() => {
-		if (audioEnabled) {
+		if (audioEnabled && ttsMessages.length > 0) {
 			const voice = localVoiceList[generalVoiceIndex];
-			console.log(localVoiceList);
-			speak(
-				'Che, el kumako argento version femenino, igual le llamo femkumako, o femako, o fernet, ya que somos argentinos. Podemos tener muchas copas, pero nunca las malvinas',
-				voice,
-				1,
-				1,
-				1
-			);
+			const message = ttsMessages[0];
+			const messageTTS = `${message.username} dice ${message.text}`;
+			speak(messageTTS, voice, 1, 1, 1);
+			dispatch(shiftTTSMessage());
 		}
-	}, [audioEnabled]);
+	}, [audioEnabled, ttsMessages]);
 
 	return <div />;
 };

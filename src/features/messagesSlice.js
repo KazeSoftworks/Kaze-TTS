@@ -79,6 +79,9 @@ export const messagesSlice = createSlice({
 				})
 			);
 		},
+		shiftTTSMessage: (state) => {
+			state.ttsMessages.shift();
+		},
 	},
 	extraReducers: {
 		[getGlobalEmotesInfo.fulfilled]: (state, action) => {
@@ -119,6 +122,6 @@ export const messagesSlice = createSlice({
 	},
 });
 
-export const { addMessage, deleteMessage, addTTSMessage } =
+export const { addMessage, deleteMessage, addTTSMessage, shiftTTSMessage } =
 	messagesSlice.actions;
 export default messagesSlice.reducer;
