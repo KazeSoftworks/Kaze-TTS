@@ -22,9 +22,9 @@ import ClientEngine from '@components/ClientEngine';
 
 const App = () => {
 	const dispatch = useDispatch();
-	const { username, token, isAuthenticated } = useSelector(
-		(state) => state.auth
-	);
+	const username = useSelector((state) => state.auth.username);
+	const token = useSelector((state) => state.auth.token);
+	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
 	useEffect(() => {
 		if (token) {
