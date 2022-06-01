@@ -17,3 +17,10 @@ export const PATH_HOME = '/';
 export const PATH_TWITCH = '/twitch';
 export const PATH_SETTINGS = '/settings';
 export const PATH_SETTINGS_FILTER = `${PATH_SETTINGS}/filter`;
+
+export const TYPE_BROADCASTER = 'broadcaster';
+export const TYPE_MODERATOR = 'moderator';
+export const TYPE_SUBSCRIBER = 'subscriber';
+export const TYPE_VIP = 'vip';
+export const TYPE_CHAT = 'chat';
+export const TYPE_LURKER = 'lurker';
