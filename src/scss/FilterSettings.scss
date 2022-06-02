@@ -1,0 +1,13 @@
+.filter-settings {
+	&__fieldset {
+		display: flex;
+		flex-direction: column;
+	}
+	&__label {
+		display: flex;
+	}
+	&__emote {
+		height: 1.5rem;
+		padding: 0 0.25rem;
+	}
+}

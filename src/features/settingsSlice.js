@@ -6,6 +6,12 @@ const initialState = {
 	generalVoiceIndex: null,
 	generalVoicePitch: 1,
 	generalVoiceRate: 1,
+
+	speakBroadcaster: false,
+	speakSubscriber: true,
+	speakModerator: true,
+	speakVip: true,
+	speakChat: true,
 };
 
 export const settingsSlice = createSlice({
@@ -27,6 +33,22 @@ export const settingsSlice = createSlice({
 		setGeneralVoiceRate: (state, action) => {
 			state.generalVoiceRate = action.payload;
 		},
+
+		toggleSpeakBroadcaster: (state) => {
+			state.speakBroadcaster = !state.speakBroadcaster;
+		},
+		toggleSpeakSubscriber: (state) => {
+			state.speakSubscriber = !state.speakSubscriber;
+		},
+		toggleSpeakModerator: (state) => {
+			state.speakModerator = !state.speakModerator;
+		},
+		toggleSpeakVip: (state) => {
+			state.speakVip = !state.speakVip;
+		},
+		toggleSpeakChat: (state) => {
+			state.speakChat = !state.speakChat;
+		},
 	},
 });
 
@@ -36,5 +58,10 @@ export const {
 	setGeneralVoiceIndex,
 	setGeneralVoicePitch,
 	setGeneralVoiceRate,
+	toggleSpeakBroadcaster,
+	toggleSpeakModerator,
+	toggleSpeakSubscriber,
+	toggleSpeakVip,
+	toggleSpeakChat,
 } = settingsSlice.actions;
 export default settingsSlice.reducer;

@@ -7,6 +7,7 @@ import {
 import { shiftTTSMessage } from '@features/messagesSlice';
 import React, { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import store from '@features/store';
 
 const AudioEngine = () => {
 	const synth = window.speechSynthesis;
@@ -18,14 +19,17 @@ const AudioEngine = () => {
 	const audioEnabled = useSelector((state) => state.settings.audioEnabled);
 	const ttsMessages = useSelector((state) => state.messages.ttsMessages);
 
-	const speak = (text, voice, lang, rate, pitch) => {
+	const speak = async (text, voice, lang, rate, pitch) => {
 		const utterance = new SpeechSynthesisUtterance(text);
 		utterance.voice = voice;
 		utterance.lang = lang;
 		utterance.rate = rate;
 		utterance.pitch = pitch;
 		utterance.volume = 1;
-		synth.speak(utterance);
+		await new Promise((resolve) => {
+			utterance.onend = resolve;
+			synth.speak(utterance);
+		});
 	};
 
 	useEffect(() => {
@@ -57,8 +61,42 @@ const AudioEngine = () => {
 			const voice = localVoiceList[generalVoiceIndex];
 			const message = ttsMessages[0];
 			const messageTTS = `${message.username} dice ${message.text}`;
-			speak(messageTTS, voice, 1, 1, 1);
 			dispatch(shiftTTSMessage());
+			const {
+				speakBroadcaster,
+				speakModerator,
+				speakSubscriber,
+				speakVip,
+				speakChat,
+			} = store.getState().settings;
+
+			console.log(
+				message,
+				speakBroadcaster,
+				speakSubscriber,
+				speakModerator,
+				speakVip,
+				speakChat
+			);
+			if (message.broadcaster) {
+				if (speakBroadcaster) {
+					speak(messageTTS, voice, 1, 1, 1).then(() => {});
+				}
+			} else if (message.mod) {
+				if (speakModerator) {
+					speak(messageTTS, voice, 1, 1, 1).then(() => {});
+				}
+			} else if (message.vip) {
+				if (speakVip) {
+					speak(messageTTS, voice, 1, 1, 1).then(() => {});
+				}
+			} else if (message.subscriber) {
+				if (speakSubscriber) {
+					speak(messageTTS, voice, 1, 1, 1).then(() => {});
+				}
+			} else if (speakChat) {
+				speak(messageTTS, voice, 1, 1, 1).then(() => {});
+			}
 		}
 	}, [audioEnabled, ttsMessages]);
 
