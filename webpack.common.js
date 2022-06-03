@@ -6,9 +6,10 @@ const Dotenv = require('dotenv-webpack');
 module.exports = {
 	entry: './src/index.jsx',
 	output: {
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, 'build'),
 		filename: 'bundle.js',
 		publicPath: '/',
+		clean: true,
 	},
 	resolve: {
 		extensions: ['.js', '.jsx'],
@@ -51,19 +52,12 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: path.join(__dirname, 'public', 'index.html'),
+			favicon: path.join(__dirname, 'public', 'favicon.ico'),
 		}),
 		new Dotenv(),
 	],
 	optimization: {
 		minimize: true,
 		minimizer: [new TerserPlugin()],
-	},
-	devServer: {
-		historyApiFallback: true,
-		allowedHosts: path.join(__dirname, 'dist'),
-		port: 4000,
-		client: {
-			overlay: false,
-		},
 	},
 };
