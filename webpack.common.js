@@ -1,5 +1,4 @@
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
@@ -56,8 +55,4 @@ module.exports = {
 		}),
 		new Dotenv(),
 	],
-	optimization: {
-		minimize: true,
-		minimizer: [new TerserPlugin()],
-	},
 };
