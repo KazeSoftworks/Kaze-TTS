@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-	entry: './src/index.jsx',
+	entry: './src/index.tsx',
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'bundle.js',
@@ -11,7 +11,7 @@ module.exports = {
 		clean: true,
 	},
 	resolve: {
-		extensions: ['.js', '.jsx'],
+		extensions: ['.js', '.jsx', 'ts', 'tsx'],
 		alias: {
 			'@scss': path.resolve(__dirname, 'src/scss'),
 			'@assets': path.resolve(__dirname, 'src/assets'),
@@ -26,12 +26,16 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.(js|jsx)$/,
+				test: /\.(js|jsx|ts|tsx)$/,
 				exclude: /node_modules/,
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: ['@babel/preset-env', '@babel/preset-react'],
+						presets: [
+							'@babel/preset-env',
+							'@babel/preset-react',
+							'@babel/typescript',
+						],
 					},
 				},
 			},
