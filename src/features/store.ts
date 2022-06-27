@@ -34,4 +34,6 @@ const store = configureStore({
 		getDefaultMiddleware().concat(logger).concat(authMiddleware),
 });
 
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 export default store;
