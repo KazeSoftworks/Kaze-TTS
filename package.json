@@ -48,6 +48,7 @@
 		"@types/react": "^18.0.12",
 		"@types/react-dom": "^18.0.5",
 		"@types/redux-logger": "^3.0.9",
+		"@types/tmi.js": "^1.8.1",
 		"babel-loader": "^8.2.5",
 		"css-loader": "^6.7.1",
 		"css-minimizer-webpack-plugin": "^4.0.0",
