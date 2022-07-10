@@ -7,8 +7,23 @@ import {
 	parseBttvEmote,
 	parseChannelBttvEmote,
 } from '@utils/emoteHandler';
+import { Emotes, MessageType } from 'types';
+import { RootState } from './store';
 
-const initialState = {
+interface MessagesSliceState {
+	isLoadingGlobalEmotes: boolean;
+	isLoadingGlobalBTTVEmotes: boolean;
+	isLoadingChannelBttvEmotes: boolean;
+
+	globalEmotes: Emotes | null;
+	bttvEmotes: Emotes | null;
+	bttvChannelEmotes: Emotes | null;
+
+	messages: MessageType[];
+	ttsMessages: MessageType[];
+}
+
+const initialState: MessagesSliceState = {
 	isLoadingGlobalEmotes: false,
 	isLoadingGlobalBTTVEmotes: false,
 	isLoadingChannelBttvEmotes: false,
@@ -21,17 +36,18 @@ const initialState = {
 	ttsMessages: [],
 };
 
-export const getGlobalEmotesInfo = createAsyncThunk(
-	'messages/getGlobalEmotes',
-	async (__, { getState }) => {
-		const { token } = getState().auth;
-		if (token) {
-			const response = getGlobalEmotes(token);
-			return response;
-		}
-		throw new Error('No token');
+export const getGlobalEmotesInfo = createAsyncThunk<
+	Emotes,
+	void,
+	{ state: RootState }
+>('messages/getGlobalEmotes', async (__, { getState }) => {
+	const { token } = getState().auth;
+	if (token) {
+		const response = getGlobalEmotes(token);
+		return response;
 	}
-);
+	throw new Error('No token');
+});
 
 export const getGlobalBTTVEmotesInfo = createAsyncThunk(
 	'messages/getGlobalBTTVEmotes',
@@ -41,17 +57,18 @@ export const getGlobalBTTVEmotesInfo = createAsyncThunk(
 	}
 );
 
-export const getChannelBttvEmotesInfo = createAsyncThunk(
-	'messages/getChannelBttvEmotes',
-	async (__, { getState }) => {
-		const { userId } = getState().auth;
-		if (userId) {
-			const response = await getChannelBttvEmotes(userId);
-			return response;
-		}
-		throw new Error('No userId');
+export const getChannelBttvEmotesInfo = createAsyncThunk<
+	Emotes,
+	void,
+	{ state: RootState }
+>('messages/getChannelBttvEmotes', async (__, { getState }) => {
+	const { userId } = getState().auth;
+	if (userId) {
+		const response = await getChannelBttvEmotes(userId);
+		return response;
 	}
-);
+	throw new Error('No userId');
+});
 
 export const messagesSlice = createSlice({
 	name: 'messages',
@@ -67,7 +84,7 @@ export const messagesSlice = createSlice({
 		},
 		deleteMessage: (state, action) => {
 			const removeIndex = state.messages
-				.map((item) => item.tags.id)
+				.map((item) => item.id)
 				.indexOf(action.payload.userstate['target-msg-id']);
 			state.messages.splice(removeIndex, 1);
 		},
@@ -83,42 +100,48 @@ export const messagesSlice = createSlice({
 			state.ttsMessages.shift();
 		},
 	},
-	extraReducers: {
-		[getGlobalEmotesInfo.fulfilled]: (state, action) => {
+	extraReducers: (builder) => {
+		builder.addCase(getGlobalEmotesInfo.fulfilled, (state, action) => {
 			state.isLoadingGlobalEmotes = false;
 			state.globalEmotes = parseTwitchEmote(action.payload);
-		},
-		[getGlobalEmotesInfo.rejected]: (state, action) => {
+		});
+
+		builder.addCase(getGlobalEmotesInfo.rejected, (state, action) => {
 			state.isLoadingGlobalEmotes = false;
 			console.error(action.payload);
-		},
-		[getGlobalEmotesInfo.pending]: (state) => {
-			state.isLoadingGlobalEmotes = true;
-		},
+		});
 
-		[getGlobalBTTVEmotesInfo.fulfilled]: (state, action) => {
+		builder.addCase(getGlobalEmotesInfo.pending, (state) => {
+			state.isLoadingGlobalEmotes = true;
+		});
+
+		builder.addCase(getGlobalBTTVEmotesInfo.fulfilled, (state, action) => {
 			state.isLoadingGlobalBTTVEmotes = false;
 			state.bttvEmotes = parseBttvEmote(action.payload);
-		},
-		[getGlobalBTTVEmotesInfo.rejected]: (state, action) => {
+		});
+
+		builder.addCase(getGlobalBTTVEmotesInfo.rejected, (state, action) => {
 			state.isLoadingGlobalBTTVEmotes = false;
 			console.error(action.payload);
-		},
-		[getGlobalBTTVEmotesInfo.pending]: (state) => {
-			state.isLoadingGlobalBTTVEmotes = true;
-		},
+		});
 
-		[getChannelBttvEmotesInfo.fulfilled]: (state, action) => {
+		builder.addCase(getGlobalBTTVEmotesInfo.pending, (state) => {
+			state.isLoadingGlobalBTTVEmotes = true;
+		});
+
+		builder.addCase(getChannelBttvEmotesInfo.fulfilled, (state, action) => {
 			state.isLoadingChannelBttvEmotes = false;
 			state.bttvChannelEmotes = parseChannelBttvEmote(action.payload);
-		},
-		[getChannelBttvEmotesInfo.rejected]: (state, action) => {
+		});
+
+		builder.addCase(getChannelBttvEmotesInfo.rejected, (state, action) => {
 			state.isLoadingChannelBttvEmotes = false;
 			console.error(action.payload);
-		},
-		[getChannelBttvEmotesInfo.pending]: (state) => {
+		});
+
+		builder.addCase(getChannelBttvEmotesInfo.pending, (state) => {
 			state.isLoadingChannelBttvEmotes = true;
-		},
+		});
 	},
 });
 
