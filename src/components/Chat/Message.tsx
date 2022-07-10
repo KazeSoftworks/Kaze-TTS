@@ -1,13 +1,19 @@
-import React, { memo } from 'react';
+import React, { memo, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import { getTwitchEmoteUrl, getBttvEmoteUrl } from '@utils/emoteHandler';
 import { useSelector } from 'react-redux';
 import '@scss/Message.scss';
 import { formatTime } from '@utils/messageHandler';
+import { useAppSelector } from 'hooks/reduxHooks';
+import { MessageType } from 'types';
 
-const Message = ({ message }) => {
-	const globalBadges = useSelector((state) => state.twitch.globalBadges);
-	const chatBadges = useSelector((state) => state.twitch.chatBadges);
+interface MessageProps {
+	message: MessageType;
+}
+
+const Message = ({ message }: MessageProps) => {
+	const globalBadges = useAppSelector((state) => state.twitch.globalBadges);
+	const chatBadges = useAppSelector((state) => state.twitch.chatBadges);
 	const getMessageColor = () => {
 		if (message.color) {
 			return message.color;
@@ -16,30 +22,38 @@ const Message = ({ message }) => {
 	};
 
 	const getAuthorBadges = () => {
-		const badgesComponent = [];
+		const badgesComponent: ReactElement[] = [];
 		if (!message.badges) {
 			return badgesComponent;
 		}
 		Object.keys(message.badges).forEach((badge) => {
-			if (globalBadges[badge] && globalBadges[badge][message.badges[badge]]) {
-				badgesComponent.push(
-					<img
-						className="message__text__emote"
-						key={`${message.id}-${message.userId}-${badge}`}
-						src={globalBadges[badge][message.badges[badge]]}
-						alt={badge}
-						title={badge}
-					/>
-				);
-			} else if (
-				chatBadges[badge] &&
-				chatBadges[badge][message.badges[badge]]
+			const badgeData = message.badges?.[badge];
+			if (
+				globalBadges &&
+				globalBadges[badge] &&
+				badgeData &&
+				globalBadges[badge][badgeData]
 			) {
 				badgesComponent.push(
 					<img
 						className="message__text__emote"
 						key={`${message.id}-${message.userId}-${badge}`}
-						src={chatBadges[badge][message.badges[badge]]}
+						src={globalBadges[badge][badgeData]}
+						alt={badge}
+						title={badge}
+					/>
+				);
+			} else if (
+				chatBadges &&
+				chatBadges[badge] &&
+				badgeData &&
+				chatBadges[badge][badgeData]
+			) {
+				badgesComponent.push(
+					<img
+						className="message__text__emote"
+						key={`${message.id}-${message.userId}-${badge}`}
+						src={chatBadges[badge][badgeData]}
 						alt={badge}
 						title={badge}
 					/>
@@ -51,7 +65,7 @@ const Message = ({ message }) => {
 	};
 
 	const getMessage = () => {
-		const textComponent = [];
+		const textComponent: ReactElement[] = [];
 		const textArray = message.text.split(/(\s+)/);
 		textArray.forEach((word, imageIndex) => {
 			if (message.emotes && message.emotes[word]) {
@@ -75,7 +89,7 @@ const Message = ({ message }) => {
 					/>
 				);
 			} else {
-				textComponent.push(word);
+				textComponent.push(<span>{word}</span>);
 			}
 		});
 		return textComponent;
@@ -83,7 +97,9 @@ const Message = ({ message }) => {
 
 	return (
 		<li className="message">
-			<span className="message__timestamp">{formatTime(message.ts)}</span>
+			{message.ts && (
+				<span className="message__timestamp">{formatTime(message.ts)}</span>
+			)}
 			<span className="message__author" style={{ color: getMessageColor() }}>
 				{getAuthorBadges()}
 				{message.displayName}:

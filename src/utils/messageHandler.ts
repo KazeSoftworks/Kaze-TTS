@@ -1,4 +1,7 @@
-const containsBBTVEmotes = (msg, dictionary) => {
+import { ChatUserstate } from 'tmi.js';
+import { Emotes } from 'types';
+
+const containsBBTVEmotes = (msg: string, dictionary: Emotes) => {
 	if (!dictionary) {
 		return null;
 	}
@@ -35,7 +38,7 @@ const containsBBTVEmotes = (msg, dictionary) => {
 	return null;
 };
 
-const containsTwitchEmotes = (msg, emotes) => {
+const containsTwitchEmotes = (msg: string, emotes: ChatUserstate['emotes']) => {
 	// Get the emote codes from the message
 	if (!emotes) {
 		return null;
@@ -56,7 +59,14 @@ const containsTwitchEmotes = (msg, emotes) => {
 	return emoteCodes;
 };
 
-const parseTwitchMessage = ({ tags, message }, bttvDictionary) => {
+interface ParseTwitchMessage {
+	message: string;
+	tags: ChatUserstate;
+}
+const parseTwitchMessage = (
+	{ tags, message }: ParseTwitchMessage,
+	bttvDictionary: Emotes
+) => {
 	const {
 		badges,
 		color,
@@ -91,9 +101,9 @@ const parseTwitchMessage = ({ tags, message }, bttvDictionary) => {
 	};
 };
 
-const formatTime = (ts) => {
+const formatTime = (ts: string) => {
 	const a = new Date(Number(ts));
-	const formattedNumber = (n) => (n < 10 ? `0${n}` : n);
+	const formattedNumber = (n: number) => (n < 10 ? `0${n}` : n);
 	const year = formattedNumber(a.getFullYear());
 	const month = formattedNumber(a.getMonth());
 	const date = formattedNumber(a.getDate());

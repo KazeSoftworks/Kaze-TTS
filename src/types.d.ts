@@ -15,11 +15,14 @@ export interface MessageType {
 	username: string | undefined;
 	vip: boolean | undefined;
 	broadcaster: boolean | undefined;
-	text: string | undefined;
+	text: string;
 }
 
 export interface Emotes {
-	[key: string]: string;
+	[key: string]: {
+		code: string;
+		positions: string[];
+	};
 }
 
 export interface Chatter {
@@ -37,5 +40,5 @@ export interface Chatters {
 }
 
 export interface Badge {
-	[key: string]: string;
+	[key: string]: { [key: string]: string };
 }
