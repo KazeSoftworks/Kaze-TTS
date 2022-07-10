@@ -1,4 +1,6 @@
-const convertBadgeResponse = (badgeResponse) => {
+import { ApiBadges } from 'twitch';
+
+const convertBadgeResponse = (badgeResponse: ApiBadges[]) => {
 	if (badgeResponse.length === 0) {
 		return null;
 	}

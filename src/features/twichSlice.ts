@@ -6,8 +6,28 @@ import {
 	getChatBadges,
 } from '@services/api';
 import convertBadgeResponse from '@utils/badgeHandler';
+import { ApiBadges, User } from 'twitch';
+import { Badge, Chatters } from 'types';
+import { RootState } from './store';
 
-const initialState = {
+interface TwitchSliceState {
+	isLoadingUserInfo: boolean;
+	isLoadingFollowers: boolean;
+	isLoadingGlobalBadges: boolean;
+	isLoadingChatBadges: boolean;
+	isLoadingChat: boolean;
+
+	displayName: string;
+	profileImageUrl: string;
+	followers: number | null;
+	globalBadges: Badge | null;
+	chatBadges: Badge | null;
+
+	error: string[];
+	chatters: Chatters;
+}
+
+const initialState: TwitchSliceState = {
 	isLoadingUserInfo: false,
 	isLoadingFollowers: false,
 	isLoadingGlobalBadges: false,
@@ -23,7 +43,7 @@ const initialState = {
 	chatters: {},
 };
 
-export const getUserInfo = createAsyncThunk(
+export const getUserInfo = createAsyncThunk<User, void, { state: RootState }>(
 	'twitch/getUserInfo',
 	async (__, { getState }) => {
 		const { token, userId } = getState().auth;
@@ -35,41 +55,44 @@ export const getUserInfo = createAsyncThunk(
 	}
 );
 
-export const getFollowersInfo = createAsyncThunk(
-	'twitch/getFollowersInfo',
-	async (__, { getState }) => {
-		const { token, userId } = getState().auth;
-		if (token) {
-			const response = getFollowers(token, userId);
-			return response;
-		}
-		throw new Error('No token');
+export const getFollowersInfo = createAsyncThunk<
+	number,
+	void,
+	{ state: RootState }
+>('twitch/getFollowersInfo', async (__, { getState }) => {
+	const { token, userId } = getState().auth;
+	if (token) {
+		const response = getFollowers(token, userId);
+		return response;
 	}
-);
+	throw new Error('No token');
+});
 
-export const getGlobalChatBadgesInfo = createAsyncThunk(
-	'twitch/getGlobalBadgesInfo',
-	async (__, { getState }) => {
-		const { token } = getState().auth;
-		if (token) {
-			const response = getGlobalChatBadges(token);
-			return response;
-		}
-		throw new Error('No token');
+export const getGlobalChatBadgesInfo = createAsyncThunk<
+	ApiBadges[],
+	void,
+	{ state: RootState }
+>('twitch/getGlobalBadgesInfo', async (__, { getState }) => {
+	const { token } = getState().auth;
+	if (token) {
+		const response = getGlobalChatBadges(token);
+		return response;
 	}
-);
+	throw new Error('No token');
+});
 
-export const getChatBadgesInfo = createAsyncThunk(
-	'twitch/getChatBadgesInfo',
-	async (__, { getState }) => {
-		const { token, userId } = getState().auth;
-		if (token) {
-			const response = getChatBadges(token, userId);
-			return response;
-		}
-		throw new Error('No token');
+export const getChatBadgesInfo = createAsyncThunk<
+	ApiBadges[],
+	void,
+	{ state: RootState }
+>('twitch/getChatBadgesInfo', async (__, { getState }) => {
+	const { token, userId } = getState().auth;
+	if (token) {
+		const response = getChatBadges(token, userId);
+		return response;
 	}
-);
+	throw new Error('No token');
+});
 
 export const twitchSlice = createSlice({
 	name: 'twitch',
@@ -132,55 +155,55 @@ export const twitchSlice = createSlice({
 			state.isLoadingChat = action.payload;
 		},
 	},
-	extraReducers: {
-		[getUserInfo.fulfilled]: (state, action) => {
+	extraReducers: (builder) => {
+		builder.addCase(getUserInfo.fulfilled, (state, action) => {
 			state.isLoadingUserInfo = false;
 			state.displayName = action.payload.display_name;
 			state.profileImageUrl = action.payload.profile_image_url;
-		},
-		[getUserInfo.rejected]: (state, action) => {
+		});
+		builder.addCase(getUserInfo.rejected, (state, action) => {
 			state.isLoadingUserInfo = false;
 			console.error(action.payload);
-		},
-		[getUserInfo.pending]: (state) => {
+		});
+		builder.addCase(getUserInfo.pending, (state) => {
 			state.isLoadingUserInfo = true;
-		},
+		});
 
-		[getFollowersInfo.fulfilled]: (state, action) => {
+		builder.addCase(getFollowersInfo.fulfilled, (state, action) => {
 			state.isLoadingFollowers = false;
 			state.followers = action.payload;
-		},
-		[getFollowersInfo.rejected]: (state, action) => {
+		});
+		builder.addCase(getFollowersInfo.rejected, (state, action) => {
 			state.isLoadingFollowers = false;
 			console.error(action.payload);
-		},
-		[getFollowersInfo.pending]: (state) => {
+		});
+		builder.addCase(getFollowersInfo.pending, (state) => {
 			state.isLoadingFollowers = true;
-		},
+		});
 
-		[getGlobalChatBadgesInfo.fulfilled]: (state, action) => {
+		builder.addCase(getGlobalChatBadgesInfo.fulfilled, (state, action) => {
 			state.isLoadingGlobalBadges = false;
 			state.globalBadges = convertBadgeResponse(action.payload);
-		},
-		[getGlobalChatBadgesInfo.rejected]: (state, action) => {
+		});
+		builder.addCase(getGlobalChatBadgesInfo.rejected, (state, action) => {
 			state.isLoadingGlobalBadges = false;
 			console.error(action.payload);
-		},
-		[getGlobalChatBadgesInfo.pending]: (state) => {
+		});
+		builder.addCase(getGlobalChatBadgesInfo.pending, (state) => {
 			state.isLoadingGlobalBadges = true;
-		},
+		});
 
-		[getChatBadgesInfo.fulfilled]: (state, action) => {
+		builder.addCase(getChatBadgesInfo.fulfilled, (state, action) => {
 			state.isLoadingChatBadges = false;
 			state.chatBadges = convertBadgeResponse(action.payload);
-		},
-		[getChatBadgesInfo.rejected]: (state, action) => {
+		});
+		builder.addCase(getChatBadgesInfo.rejected, (state, action) => {
 			state.isLoadingChatBadges = false;
 			console.error(action.payload);
-		},
-		[getChatBadgesInfo.pending]: (state) => {
+		});
+		builder.addCase(getChatBadgesInfo.pending, (state) => {
 			state.isLoadingChatBadges = true;
-		},
+		});
 	},
 });
 export const { addChatter, removeChatter, setLoadingChat } =

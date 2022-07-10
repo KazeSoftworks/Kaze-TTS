@@ -21,3 +21,21 @@ export interface MessageType {
 export interface Emotes {
 	[key: string]: string;
 }
+
+export interface Chatter {
+	username: string;
+	displayName: string | undefined;
+	broadcaster: boolean | undefined;
+	mod: boolean | undefined;
+	vip: boolean | undefined;
+	subscriber: boolean | undefined;
+	isLurker: boolean | undefined;
+}
+
+export interface Chatters {
+	[key: string]: Chatter;
+}
+
+export interface Badge {
+	[key: string]: string;
+}
