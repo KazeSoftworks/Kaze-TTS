@@ -7,17 +7,19 @@ import {
 	parseBttvEmote,
 	parseChannelBttvEmote,
 } from '@utils/emoteHandler';
-import { Emotes, MessageType } from 'types';
+import { ChatEmote, Emote, MessageType } from 'types';
 import { RootState } from './store';
+import { ApiEmote } from 'twitch';
+import { BTTVChannelEmoteRequest } from 'bttv';
 
 interface MessagesSliceState {
 	isLoadingGlobalEmotes: boolean;
 	isLoadingGlobalBTTVEmotes: boolean;
 	isLoadingChannelBttvEmotes: boolean;
 
-	globalEmotes: Emotes | null;
-	bttvEmotes: Emotes | null;
-	bttvChannelEmotes: Emotes | null;
+	globalEmotes: Emote | null;
+	bttvEmotes: Emote | null;
+	bttvChannelEmotes: Emote | null;
 
 	messages: MessageType[];
 	ttsMessages: MessageType[];
@@ -37,7 +39,7 @@ const initialState: MessagesSliceState = {
 };
 
 export const getGlobalEmotesInfo = createAsyncThunk<
-	Emotes,
+	ApiEmote[],
 	void,
 	{ state: RootState }
 >('messages/getGlobalEmotes', async (__, { getState }) => {
@@ -58,7 +60,7 @@ export const getGlobalBTTVEmotesInfo = createAsyncThunk(
 );
 
 export const getChannelBttvEmotesInfo = createAsyncThunk<
-	Emotes,
+	BTTVChannelEmoteRequest,
 	void,
 	{ state: RootState }
 >('messages/getChannelBttvEmotes', async (__, { getState }) => {

@@ -1,16 +1,20 @@
-const getTwitchEmoteUrl = (emoteId) => {
+import { BTTVChannelEmoteRequest, BTTVEmote } from 'bttv';
+import { ApiEmote } from 'twitch';
+import { ChatEmote, Emote } from 'types';
+
+const getTwitchEmoteUrl = (emoteId: string) => {
 	return `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;
 };
 
-const getBttvEmoteUrl = (emoteId) => {
+const getBttvEmoteUrl = (emoteId: string) => {
 	return `https://cdn.betterttv.net/emote/${emoteId}/3x`;
 };
 
-const parseBttvEmote = (response) => {
+const parseBttvEmote = (response: BTTVEmote[]) => {
+	const bbtv: Emote = {};
 	if (!response) {
-		return null;
+		return bbtv;
 	}
-	const bbtv = {};
 	response.forEach((item) => {
 		if (item.code) {
 			bbtv[item.code] = item.id;
@@ -19,8 +23,8 @@ const parseBttvEmote = (response) => {
 	return bbtv;
 };
 
-const parseTwitchEmote = (response) => {
-	const twitch = {};
+const parseTwitchEmote = (response: ApiEmote[]) => {
+	const twitch: Emote = {};
 	response.forEach((item) => {
 		if (item.name) {
 			twitch[item.name] = item.id;
@@ -29,11 +33,11 @@ const parseTwitchEmote = (response) => {
 	return twitch;
 };
 
-const parseChannelBttvEmote = (response) => {
+const parseChannelBttvEmote = (response: BTTVChannelEmoteRequest) => {
+	const bttv: Emote = {};
 	if (!response) {
-		return null;
+		return bttv;
 	}
-	const bttv = {};
 	const { channelEmotes, sharedEmotes } = response;
 	sharedEmotes.forEach((item) => {
 		bttv[item.code] = item.id;

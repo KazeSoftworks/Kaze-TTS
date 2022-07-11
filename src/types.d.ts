@@ -4,8 +4,8 @@ export interface MessageType {
 	badges: Badges | undefined;
 	id: string | undefined;
 	color: string | undefined;
-	emotes: Emotes | null;
-	emotesBBTV: Emotes | null;
+	emotes: ChatEmote | null;
+	emotesBBTV: ChatEmote | null;
 	displayName: string | undefined;
 	userId: string | undefined;
 	ts: string | undefined;
@@ -18,11 +18,15 @@ export interface MessageType {
 	text: string;
 }
 
-export interface Emotes {
+export interface ChatEmote {
 	[key: string]: {
 		code: string;
 		positions: string[];
 	};
+}
+
+export interface Emote {
+	[key: string]: string;
 }
 
 export interface Chatter {

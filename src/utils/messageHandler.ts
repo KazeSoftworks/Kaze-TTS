@@ -1,7 +1,7 @@
 import { ChatUserstate } from 'tmi.js';
-import { Emotes } from 'types';
+import { ChatEmote, Emote } from 'types';
 
-const containsBBTVEmotes = (msg: string, dictionary: Emotes) => {
+const containsBBTVEmotes = (msg: string, dictionary: Emote) => {
 	if (!dictionary) {
 		return null;
 	}
@@ -65,7 +65,7 @@ interface ParseTwitchMessage {
 }
 const parseTwitchMessage = (
 	{ tags, message }: ParseTwitchMessage,
-	bttvDictionary: Emotes
+	bttvDictionary: Emote
 ) => {
 	const {
 		badges,
