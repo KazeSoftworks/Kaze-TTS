@@ -1,6 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+interface SettingsSliceState {
+	audioEnabled: boolean;
+	voices: {
+		lang: string;
+		localService: string;
+		name: string;
+		voiceURI: string;
+	}[];
+	generalVoiceIndex: number | null;
+	generalVoicePitch: number;
+	generalVoiceRate: number;
+
+	speakBroadcaster: boolean;
+	speakSubscriber: boolean;
+	speakModerator: boolean;
+	speakVip: boolean;
+	speakChat: boolean;
+}
+
+const initialState: SettingsSliceState = {
 	audioEnabled: false,
 	voices: [],
 	generalVoiceIndex: null,
