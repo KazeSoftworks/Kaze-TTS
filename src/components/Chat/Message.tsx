@@ -109,31 +109,4 @@ const Message = ({ message }: MessageProps) => {
 	);
 };
 
-Message.propTypes = {
-	message: PropTypes.shape({
-		badges: PropTypes.objectOf(PropTypes.string),
-		color: PropTypes.string,
-		displayName: PropTypes.string.isRequired,
-		emotes: PropTypes.objectOf(
-			PropTypes.shape({
-				code: PropTypes.string,
-				position: PropTypes.arrayOf(PropTypes.string),
-			})
-		),
-		emotesBBTV: PropTypes.objectOf(
-			PropTypes.shape({
-				code: PropTypes.string,
-				position: PropTypes.arrayOf(PropTypes.string),
-			})
-		),
-		id: PropTypes.string.isRequired,
-		text: PropTypes.string.isRequired,
-		mod: PropTypes.bool.isRequired,
-		subscriber: PropTypes.bool.isRequired,
-		ts: PropTypes.string.isRequired,
-		turbo: PropTypes.bool.isRequired,
-		userId: PropTypes.string.isRequired,
-	}).isRequired,
-};
-
 export default memo(Message);
