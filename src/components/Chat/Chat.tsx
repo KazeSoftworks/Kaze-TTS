@@ -1,15 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import '@scss/Chat.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlug, faSync } from '@fortawesome/free-solid-svg-icons';
 import Message from './Message';
+import { useAppSelector } from 'hooks/reduxHooks';
 
 const Chat = () => {
-	const messages = useSelector((state) => state.messages.messages);
-	const isLoadingChat = useSelector((state) => state.twitch.isLoadingChat);
-	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-	const isLoadingValidate = useSelector(
+	const messages = useAppSelector((state) => state.messages.messages);
+	const isLoadingChat = useAppSelector((state) => state.twitch.isLoadingChat);
+	const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+	const isLoadingValidate = useAppSelector(
 		(state) => state.auth.isLoadingValidate
 	);
 
@@ -30,8 +30,8 @@ const Chat = () => {
 					</div>
 				)}
 				<ul>
-					{messages.map((message, index) => (
-						<Message index={index} key={message.id} message={message} />
+					{messages.map((message) => (
+						<Message key={message.id} message={message} />
 					))}
 				</ul>
 			</div>
