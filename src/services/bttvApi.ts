@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { BTTV_API } from '@utils/constants';
+import { URLSearchParamsInit } from 'react-router-dom';
 
-const baseQuery = (url, params) => {
+const baseQuery = (url: string, params?: URLSearchParamsInit) => {
 	return axios({
 		method: 'get',
 		baseURL: BTTV_API,
@@ -23,7 +24,7 @@ const getGlobalBTTVEmotes = async () => {
 		});
 };
 
-const getChannelBttvEmotes = async (userId) => {
+const getChannelBttvEmotes = async (userId: string) => {
 	return baseQuery(`users/twitch/${userId}`)
 		.then((response) => {
 			return response.data;

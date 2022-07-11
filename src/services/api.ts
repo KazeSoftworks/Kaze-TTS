@@ -1,20 +1,25 @@
 import axios from 'axios';
 import { API, CLIENT_ID } from '@utils/constants';
+import { URLSearchParamsInit } from 'react-router-dom';
 
-const baseQuery = (url, token, params) => {
+const baseQuery = (
+	url: string,
+	token: string,
+	params?: URLSearchParamsInit
+) => {
 	return axios({
 		method: 'get',
 		baseURL: API,
 		url,
 		headers: {
-			'Client-Id': CLIENT_ID,
+			'Client-Id': CLIENT_ID || 'ERROR_CHECK_ENV',
 			Authorization: `Bearer ${token}`,
 		},
 		params,
 	});
 };
 
-const getUser = async (token, userId) => {
+const getUser = async (token: string, userId: string) => {
 	const params = new URLSearchParams();
 	params.append('id', userId);
 	return baseQuery('users', token, params)
@@ -26,10 +31,10 @@ const getUser = async (token, userId) => {
 		});
 };
 
-const getFollowers = async (token, userId) => {
+const getFollowers = async (token: string, userId: string) => {
 	const params = new URLSearchParams();
 	params.append('to_id', userId);
-	params.append('first', 1);
+	params.append('first', '1');
 	return baseQuery('users/follows', token, params)
 		.then((response) => {
 			return response.data.total;
@@ -39,7 +44,7 @@ const getFollowers = async (token, userId) => {
 		});
 };
 
-const getGlobalEmotes = async (token) => {
+const getGlobalEmotes = async (token: string) => {
 	return baseQuery('chat/emotes/global', token)
 		.then((response) => {
 			return response.data.data;
@@ -49,7 +54,7 @@ const getGlobalEmotes = async (token) => {
 		});
 };
 
-const getGlobalChatBadges = async (token) => {
+const getGlobalChatBadges = async (token: string) => {
 	return baseQuery('chat/badges/global', token)
 		.then((response) => {
 			return response.data.data;
@@ -59,7 +64,7 @@ const getGlobalChatBadges = async (token) => {
 		});
 };
 
-const getChatBadges = async (token, userId) => {
+const getChatBadges = async (token: string, userId: string) => {
 	const params = new URLSearchParams();
 	params.append('broadcaster_id', userId);
 	return baseQuery('chat/badges', token, params)

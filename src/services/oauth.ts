@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { ID_API } from '@utils/constants';
+import { CLIENT_ID, ID_API } from '@utils/constants';
 
-const baseQuery = (url, token) => {
+const baseQuery = (url: string, token: string) => {
 	return axios({
 		method: 'get',
 		baseURL: ID_API,
@@ -12,7 +12,7 @@ const baseQuery = (url, token) => {
 	});
 };
 
-const validate = async (token) => {
+const validate = async (token: string) => {
 	return baseQuery('/validate', token)
 		.then((response) => {
 			return response.data;
@@ -22,9 +22,9 @@ const validate = async (token) => {
 		});
 };
 
-const revoke = async (token) => {
+const revoke = async (token: string) => {
 	const params = new URLSearchParams();
-	params.append('client_id', process.env.REACT_APP_CLIENT_ID);
+	params.append('client_id', CLIENT_ID || 'ERROR_CHECK_ENV');
 	params.append('token', token);
 
 	axios({
