@@ -1,15 +1,15 @@
 import { setGeneralVoiceIndex } from '@features/settingsSlice';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
+import React, { ChangeEvent } from 'react';
 
 const VoiceSettings = () => {
-	const voices = useSelector((state) => state.settings.voices);
-	const generalVoiceIndex = useSelector(
+	const voices = useAppSelector((state) => state.settings.voices);
+	const generalVoiceIndex = useAppSelector(
 		(state) => state.settings.generalVoiceIndex
 	);
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
-	const handleVoiceChange = (e) => {
+	const handleVoiceChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		dispatch(setGeneralVoiceIndex(e.target.value));
 	};
 
