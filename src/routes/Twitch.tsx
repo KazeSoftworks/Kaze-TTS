@@ -11,10 +11,10 @@ const Twitch = () => {
 	const navigate = useNavigate();
 	const { search, hash } = location;
 
-	const getQuery = (url) => {
+	const getQuery = (url: string) => {
 		const query = url.substring(1);
 		const vars = query.split('&');
-		const result = {};
+		const result: { [key: string]: string } = {};
 		vars.forEach((part) => {
 			const item = part.split('=');
 			result[item[0]] = decodeURIComponent(item[1]);

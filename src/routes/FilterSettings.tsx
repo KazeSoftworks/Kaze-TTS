@@ -8,7 +8,6 @@ import {
 	TYPE_VIP,
 } from '@utils/constants';
 import '@scss/FilterSettings.scss';
-import { useDispatch, useSelector } from 'react-redux';
 import {
 	toggleSpeakBroadcaster,
 	toggleSpeakModerator,
@@ -16,20 +15,28 @@ import {
 	toggleSpeakVip,
 	toggleSpeakChat,
 } from '@features/settingsSlice';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 
 const FilterSettings = () => {
-	const dispatch = useDispatch();
-	const speakBroadcaster = useSelector(
+	const dispatch = useAppDispatch();
+	const speakBroadcaster = useAppSelector(
 		(state) => state.settings.speakBroadcaster
 	);
-	const speakModerator = useSelector((state) => state.settings.speakModerator);
-	const speakSubscriber = useSelector(
+	const speakModerator = useAppSelector(
+		(state) => state.settings.speakModerator
+	);
+	const speakSubscriber = useAppSelector(
 		(state) => state.settings.speakSubscriber
 	);
-	const speakVip = useSelector((state) => state.settings.speakVip);
-	const speakChat = useSelector((state) => state.settings.speakChat);
+	const speakVip = useAppSelector((state) => state.settings.speakVip);
+	const speakChat = useAppSelector((state) => state.settings.speakChat);
 
-	const chatterCheckBox = (type, text, checked, onChange = () => {}) => {
+	const chatterCheckBox = (
+		type: string,
+		text: string,
+		checked: boolean,
+		onChange = () => {}
+	) => {
 		return (
 			<label htmlFor={type} className="filter-settings__label">
 				<input
