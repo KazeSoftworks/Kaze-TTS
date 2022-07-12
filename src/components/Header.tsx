@@ -5,19 +5,20 @@ import {
 	faCircleUser,
 	faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'react-redux';
 import { AUTH_URI } from '@utils/constants';
 import KazeSymbol from '@assets/KazeSymbol.svg';
 import '@scss/Header.scss';
 import { revokeToken } from '@features/authSlice';
 import Button from '@components/Button';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 
 const Header = () => {
-	const dispatch = useDispatch();
-	const { isAuthenticated, isLoadingValidate, isLoadingRevoke } = useSelector(
-		(state) => state.auth
+	const dispatch = useAppDispatch();
+	const { isAuthenticated, isLoadingValidate, isLoadingRevoke } =
+		useAppSelector((state) => state.auth);
+	const profileImageUrl = useAppSelector(
+		(state) => state.twitch.profileImageUrl
 	);
-	const profileImageUrl = useSelector((state) => state.twitch.profileImageUrl);
 
 	const handleLogin = () => {
 		window.location.href = AUTH_URI;
