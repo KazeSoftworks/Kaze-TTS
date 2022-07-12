@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import '@scss/SettingContainer.scss';
 
-const SettingContainer = ({ children }) => {
+const SettingContainer = ({ children }: { children: ReactNode }) => {
 	return <div className="setting-container">{children}</div>;
 };
 
