@@ -5,13 +5,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import '@scss/Footer.scss';
+import { useAppSelector } from 'hooks/reduxHooks';
 
 const Footer = () => {
-	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-	const displayName = useSelector((state) => state.twitch.displayName);
-	const followers = useSelector((state) => state.twitch.followers);
+	const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+	const displayName = useAppSelector((state) => state.twitch.displayName);
+	const followers = useAppSelector((state) => state.twitch.followers);
 
 	return (
 		<footer className="footer">
