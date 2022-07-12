@@ -1,8 +1,21 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import {
+	FontAwesomeIcon,
+	FontAwesomeIconProps,
+} from '@fortawesome/react-fontawesome';
+import React, { MouseEvent, MouseEventHandler, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import '@scss/Button.scss';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+
+interface ButtonProps {
+	onClick: MouseEventHandler<HTMLButtonElement>;
+	className: string;
+	children: ReactNode;
+	startIcon: IconProp;
+	endIcon: IconProp;
+	isLoading: boolean;
+}
 
 const Button = ({
 	onClick,
@@ -11,7 +24,7 @@ const Button = ({
 	startIcon,
 	endIcon,
 	isLoading,
-}) => {
+}: ButtonProps) => {
 	const baseClass = 'button';
 	const buttonClass = () => {
 		const customClass = `${baseClass} ${className || ''}
@@ -34,38 +47,6 @@ const Button = ({
 			{endIcon && <FontAwesomeIcon icon={endIcon} />}
 		</button>
 	);
-};
-
-const FontAwesomeIconShape = PropTypes.shape({
-	icon: PropTypes.arrayOf(
-		PropTypes.oneOfType([
-			PropTypes.string,
-			PropTypes.number,
-			PropTypes.arrayOf(
-				PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-			),
-		])
-	),
-	iconName: PropTypes.string,
-	prefix: PropTypes.string,
-});
-
-Button.propTypes = {
-	onClick: PropTypes.func,
-	children: PropTypes.node,
-	className: PropTypes.string,
-	startIcon: FontAwesomeIconShape,
-	endIcon: FontAwesomeIconShape,
-	isLoading: PropTypes.bool,
-};
-
-Button.defaultProps = {
-	onClick: () => {},
-	children: null,
-	className: '',
-	startIcon: null,
-	endIcon: null,
-	isLoading: false,
 };
 
 export default Button;
