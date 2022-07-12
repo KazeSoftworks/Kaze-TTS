@@ -16,15 +16,15 @@ import {
 	getGlobalEmotesInfo,
 	getChannelBttvEmotesInfo,
 } from '@features/messagesSlice';
-import { useDispatch, useSelector } from 'react-redux';
 import AudioEngine from '@components/AudioEngine';
 import ClientEngine from '@components/ClientEngine';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 
 const App = () => {
-	const dispatch = useDispatch();
-	const username = useSelector((state) => state.auth.username);
-	const token = useSelector((state) => state.auth.token);
-	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+	const dispatch = useAppDispatch();
+	const username = useAppSelector((state) => state.auth.username);
+	const token = useAppSelector((state) => state.auth.token);
+	const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
 	useEffect(() => {
 		if (token) {
