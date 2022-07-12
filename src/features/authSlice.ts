@@ -1,27 +1,40 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { revoke, validate } from '@services/oauth';
+import { ApiValidate } from 'twitch';
+import { RootState } from './store';
 
-export const initialState = {
+interface AuthSliceState {
+	username: string;
+	userId: string;
+	token: string;
+	isAuthenticated: boolean;
+	isLoadingValidate: boolean;
+	isLoadingRevoke: boolean;
+}
+
+export const initialState: AuthSliceState = {
 	username: '',
 	userId: '',
+	token: '',
 	isAuthenticated: false,
 	isLoadingValidate: false,
 	isLoadingRevoke: false,
 };
 
-export const validateToken = createAsyncThunk(
-	'auth/validate',
-	async (__, { getState }) => {
-		const { token } = getState().auth;
-		if (token) {
-			const response = validate(token);
-			return response;
-		}
-		throw new Error('No token');
+export const validateToken = createAsyncThunk<
+	ApiValidate,
+	void,
+	{ state: RootState }
+>('auth/validate', async (__, { getState }) => {
+	const { token } = getState().auth;
+	if (token) {
+		const response = validate(token);
+		return response;
 	}
-);
+	throw new Error('No token');
+});
 
-export const revokeToken = createAsyncThunk(
+export const revokeToken = createAsyncThunk<void, void, { state: RootState }>(
 	'auth/revoke',
 	async (__, { getState }) => {
 		const { token } = getState().auth;
@@ -46,41 +59,41 @@ export const authSlice = createSlice({
 			state.token = '';
 		},
 	},
-	extraReducers: {
-		[validateToken.fulfilled]: (state, action) => {
+	extraReducers: (builder) => {
+		builder.addCase(validateToken.fulfilled, (state, action) => {
 			state.isAuthenticated = true;
 			state.isLoadingValidate = false;
 			state.userId = action.payload.user_id;
 			state.username = action.payload.login;
-		},
-		[validateToken.rejected]: (state) => {
+		});
+		builder.addCase(validateToken.rejected, (state, action) => {
 			state.isAuthenticated = false;
 			state.isLoadingValidate = false;
 			state.username = '';
 			state.userId = '';
 			state.token = '';
-		},
-		[validateToken.pending]: (state) => {
+		});
+		builder.addCase(validateToken.pending, (state, action) => {
 			state.isLoadingValidate = true;
-		},
+		});
 
-		[revokeToken.fulfilled]: (state) => {
+		builder.addCase(revokeToken.fulfilled, (state) => {
 			state.isAuthenticated = false;
 			state.isLoadingRevoke = false;
 			state.username = '';
 			state.userId = '';
 			state.token = '';
-		},
-		[revokeToken.rejected]: (state) => {
+		});
+		builder.addCase(revokeToken.rejected, (state) => {
 			state.isAuthenticated = false;
-			state.isLoadingRevoke = false;
+			state.isLoadingValidate = false;
 			state.username = '';
 			state.userId = '';
 			state.token = '';
-		},
-		[revokeToken.pending]: (state) => {
+		});
+		builder.addCase(revokeToken.pending, (state) => {
 			state.isLoadingRevoke = true;
-		},
+		});
 	},
 });
 
