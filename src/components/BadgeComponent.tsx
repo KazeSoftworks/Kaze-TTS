@@ -11,11 +11,16 @@ import {
 import ChatterBadge from '@assets/Chatter Badge.svg';
 import LurkerBadge from '@assets/Lurker Badge.svg';
 import PropTypes from 'prop-types';
+import { useAppSelector } from 'hooks/reduxHooks';
 
-const BadgeComponent = ({ type, className }) => {
+interface BadgeComponentProps {
+	type: string;
+	className: string;
+}
+const BadgeComponent = ({ type, className }: BadgeComponentProps) => {
 	const renderBadge = () => {
-		const badges = useSelector((state) => state.twitch.globalBadges);
-		if (!badges && (type !== TYPE_CHAT || type !== TYPE_LURKER)) {
+		const badges = useAppSelector((state) => state.twitch.globalBadges);
+		if (!badges) {
 			return null;
 		}
 		switch (type) {
