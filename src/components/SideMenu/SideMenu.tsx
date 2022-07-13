@@ -7,19 +7,20 @@ import {
 	faPlay,
 	faStop,
 } from '@fortawesome/free-solid-svg-icons';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Location, useLocation, useNavigate } from 'react-router-dom';
 import { PATH_HOME, PATH_SETTINGS } from '@utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAudioEnabled } from '@features/settingsSlice';
 import Chatters from './Chatters';
+import { useAppSelector } from 'hooks/reduxHooks';
 
 const SideMenu = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const audioEnabled = useSelector((state) => state.settings.audioEnabled);
+	const audioEnabled = useAppSelector((state) => state.settings.audioEnabled);
 
-	const handleOptions = (pathname) => {
+	const handleOptions = (pathname: Location['pathname']) => {
 		switch (pathname) {
 			case PATH_HOME:
 				navigate(PATH_SETTINGS);
