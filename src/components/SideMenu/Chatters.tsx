@@ -2,23 +2,25 @@ import React, { useEffect, useState, memo } from 'react';
 import { useSelector } from 'react-redux';
 import '@scss/Chatters.scss';
 import ChattersList from './ChattersList';
+import { useAppSelector } from 'hooks/reduxHooks';
+import { Chatters } from 'types';
 
 const Chatters = () => {
-	const globalBadges = useSelector((state) => state.twitch.globalBadges);
-	const chatterList = useSelector((state) => state.twitch.chatters);
-	const [moderators, setModerators] = useState([]);
-	const [vips, setVips] = useState([]);
-	const [subscribers, setSubscribers] = useState([]);
-	const [filteredSubscribers, setFilteredSubscribers] = useState([]);
-	const [chatters, setChatters] = useState([]);
-	const [lurker, setLurker] = useState([]);
+	const globalBadges = useAppSelector((state) => state.twitch.globalBadges);
+	const chatterList = useAppSelector((state) => state.twitch.chatters);
+	const [moderators, setModerators] = useState<string[]>([]);
+	const [vips, setVips] = useState<string[]>([]);
+	const [subscribers, setSubscribers] = useState<string[]>([]);
+	const [filteredSubscribers, setFilteredSubscribers] = useState<string[]>([]);
+	const [chatters, setChatters] = useState<string[]>([]);
+	const [lurker, setLurker] = useState<string[]>([]);
 
 	useEffect(() => {
-		const modPrep = [];
-		const vipPrep = [];
-		const subPrep = [];
-		const chatterPrep = [];
-		const lurkerPrep = [];
+		const modPrep: string[] = [];
+		const vipPrep: string[] = [];
+		const subPrep: string[] = [];
+		const chatterPrep: string[] = [];
+		const lurkerPrep: string[] = [];
 		Object.keys(chatterList).forEach((chatter) => {
 			if (chatterList[chatter].mod) {
 				modPrep.push(

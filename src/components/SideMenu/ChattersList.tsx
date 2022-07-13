@@ -9,7 +9,7 @@ interface ChattersListProps {
 	users: string[];
 	subscribers?: string[];
 	category?: ChatterCategories;
-	badges?: Badge;
+	badges?: Badge | null;
 }
 
 const ChattersList = ({
