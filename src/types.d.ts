@@ -46,3 +46,10 @@ export interface Chatters {
 export interface Badge {
 	[key: string]: { [key: string]: string };
 }
+
+export type ChatterCategories =
+	| 'mod'
+	| 'vip'
+	| 'subscriber'
+	| 'chatter'
+	| 'lurker';

@@ -3,14 +3,28 @@ import PropTypes from 'prop-types';
 import ChatterBadge from '@assets/Chatter Badge.svg';
 import LurkerBadge from '@assets/Lurker Badge.svg';
 import '@scss/ChattersList.scss';
+import { Badge, ChatterCategories } from 'types';
 
-const ChattersList = ({ users, subscribers, category, badges }) => {
+interface ChattersListProps {
+	users: string[];
+	subscribers?: string[];
+	category?: ChatterCategories;
+	badges?: Badge;
+}
+
+const ChattersList = ({
+	users,
+	subscribers,
+	category,
+	badges,
+}: ChattersListProps) => {
 	const renderChatters = () => {
 		return users.map((chatter) => {
 			return (
 				<li key={`chatter-${chatter}`}>
 					{badges &&
 						category !== 'subscriber' &&
+						subscribers &&
 						subscribers.includes(chatter) && (
 							<img src={badges.subscriber[0]} alt="Subscriber badge" />
 						)}
@@ -90,16 +104,3 @@ const ChattersList = ({ users, subscribers, category, badges }) => {
 };
 
 export default memo(ChattersList);
-
-ChattersList.propTypes = {
-	users: PropTypes.arrayOf(PropTypes.string).isRequired,
-	subscribers: PropTypes.arrayOf(PropTypes.string),
-	category: PropTypes.oneOf(['mod', 'vip', 'subscriber', 'chatter', 'lurker']),
-	badges: PropTypes.objectOf(PropTypes.objectOf(PropTypes.string)),
-};
-
-ChattersList.defaultProps = {
-	badges: null,
-	category: 'lurker',
-	subscribers: [],
-};
