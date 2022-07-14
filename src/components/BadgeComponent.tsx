@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import {
 	TYPE_BROADCASTER,
 	TYPE_CHAT,
@@ -18,8 +17,8 @@ interface BadgeComponentProps {
 	className: string;
 }
 const BadgeComponent = ({ type, className }: BadgeComponentProps) => {
+	const badges = useAppSelector((state) => state.twitch.globalBadges);
 	const renderBadge = () => {
-		const badges = useAppSelector((state) => state.twitch.globalBadges);
 		if (!badges) {
 			return null;
 		}

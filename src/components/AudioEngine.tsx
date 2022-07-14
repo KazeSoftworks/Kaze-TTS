@@ -6,13 +6,12 @@ import {
 } from '@features/settingsSlice';
 import { shiftTTSMessage } from '@features/messagesSlice';
 import React, { useEffect, useState, memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import store from '@features/store';
-import { useAppSelector } from '@/hooks/reduxHooks';
+import { useAppSelector, useAppDispatch } from '@hooks/reduxHooks';
 
 const AudioEngine = () => {
 	const synth = window.speechSynthesis;
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const generalVoiceIndex = useAppSelector(
 		(state) => state.settings.generalVoiceIndex
 	);
@@ -88,22 +87,22 @@ const AudioEngine = () => {
 			);
 			if (message.broadcaster) {
 				if (speakBroadcaster) {
-					speak(messageTTS, voice, 1, 1).then(() => {});
+					speak(messageTTS, voice, 1, 1);
 				}
 			} else if (message.mod) {
 				if (speakModerator) {
-					speak(messageTTS, voice, 1, 1).then(() => {});
+					speak(messageTTS, voice, 1, 1);
 				}
 			} else if (message.vip) {
 				if (speakVip) {
-					speak(messageTTS, voice, 1, 1).then(() => {});
+					speak(messageTTS, voice, 1, 1);
 				}
 			} else if (message.subscriber) {
 				if (speakSubscriber) {
-					speak(messageTTS, voice, 1, 1).then(() => {});
+					speak(messageTTS, voice, 1, 1);
 				}
 			} else if (speakChat) {
-				speak(messageTTS, voice, 1, 1).then(() => {});
+				speak(messageTTS, voice, 1, 1);
 			}
 		}
 	}, [audioEnabled, ttsMessages]);
