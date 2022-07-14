@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
 	entry: './src/index.tsx',
@@ -55,5 +56,6 @@ module.exports = {
 		new ESLintPlugin({
 			extensions: ['js', 'jsx', 'ts', 'tsx'],
 		}),
+		new ForkTsCheckerWebpackPlugin(),
 	],
 };
