@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import '@scss/Chatters.scss';
 import ChattersList from './ChattersList';
 import { useAppSelector } from 'hooks/reduxHooks';
-import { Chatters } from 'types';
 
 const Chatters = () => {
 	const globalBadges = useAppSelector((state) => state.twitch.globalBadges);
