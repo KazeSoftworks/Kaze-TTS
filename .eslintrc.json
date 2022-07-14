@@ -1,14 +1,16 @@
 {
 	"env": {
 		"browser": true,
+		"node": true,
 		"es2021": true
 	},
 	"extends": [
+		"eslint:recommended",
 		"plugin:react/recommended",
-		"airbnb",
-		"plugin:prettier/recommended",
-		"plugin:import/recommended"
+		"plugin:@typescript-eslint/recommended",
+		"prettier"
 	],
+	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaFeatures": {
 			"jsx": true
@@ -16,53 +18,16 @@
 		"ecmaVersion": "latest",
 		"sourceType": "module"
 	},
-	"plugins": ["react", "import"],
-	"rules": {
-		"prettier/prettier": [
-			"error",
-			{
-				"useTabs": true,
-				"tabWidth": 2,
-				"singleQuote": true,
-				"printWidth": 80,
-				"trailingComma": "es5"
-			}
-		],
-		"no-param-reassign": [
-			"error",
-			{
-				"props": true,
-				"ignorePropertyModificationsFor": ["state"]
-			}
-		],
-		"react/function-component-definition": [
-			"error",
-			{
-				"namedComponents": "arrow-function"
-			}
-		],
-		"import/no-extraneous-dependencies": [
-			"error",
-			{
-				"devDependencies": ["**/webpack.*.js"]
-			}
-		]
-	},
+	"plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+	"rules": {},
 	"settings": {
 		"import/resolver": {
-			"alias": {
-				"map": [
-					["@components", "./src/components"],
-					["@utils", "./src/utils"],
-					["@routes", "./src/routes"],
-					["@container", "./src/container"],
-					["@features", "./src/features"],
-					["@scss", "./src/scss"],
-					["@assets", "./src/assets"],
-					["@services", "./src/services"]
-				],
-				"extensions": [".ts", ".js", ".jsx", ".json"]
-			}
+			"typescript": {}
+		}
+	},
+	"import/resolver": {
+		"webpack": {
+			"config": "webpack.common.js"
 		}
 	}
 }

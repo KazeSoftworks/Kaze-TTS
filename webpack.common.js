@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
 	entry: './src/index.tsx',
@@ -11,17 +12,8 @@ module.exports = {
 		clean: true,
 	},
 	resolve: {
-		extensions: ['.js', '.jsx', 'ts', 'tsx'],
-		alias: {
-			'@scss': path.resolve(__dirname, 'src/scss'),
-			'@assets': path.resolve(__dirname, 'src/assets'),
-			'@routes': path.resolve(__dirname, 'src/routes'),
-			'@components': path.resolve(__dirname, 'src/components'),
-			'@container': path.resolve(__dirname, 'src/container'),
-			'@utils': path.resolve(__dirname, 'src/utils'),
-			'@services': path.resolve(__dirname, 'src/services'),
-			'@features': path.resolve(__dirname, 'src/features'),
-		},
+		extensions: ['.js', '.jsx', '.ts', '.tsx'],
+		plugins: [new TsconfigPathsPlugin()],
 	},
 	module: {
 		rules: [
