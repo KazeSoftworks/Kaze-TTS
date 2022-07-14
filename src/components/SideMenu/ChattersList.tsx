@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import PropTypes from 'prop-types';
 import ChatterBadge from '@assets/Chatter Badge.svg';
 import LurkerBadge from '@assets/Lurker Badge.svg';
 import '@scss/ChattersList.scss';

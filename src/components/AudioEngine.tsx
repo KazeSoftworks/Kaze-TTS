@@ -53,7 +53,7 @@ const AudioEngine = () => {
 		dispatch(setGeneralVoiceIndex(0));
 		dispatch(setGeneralVoiceRate(1));
 		dispatch(setGeneralVoicePitch(1));
-	}, []);
+	}, [dispatch, synth]);
 
 	useEffect(() => {
 		if (audioEnabled) {
@@ -61,7 +61,7 @@ const AudioEngine = () => {
 		} else {
 			synth.cancel();
 		}
-	}, [audioEnabled]);
+	}, [audioEnabled, synth]);
 
 	useEffect(() => {
 		if (audioEnabled && ttsMessages.length > 0 && generalVoiceIndex) {
@@ -105,7 +105,14 @@ const AudioEngine = () => {
 				speak(messageTTS, voice, 1, 1);
 			}
 		}
-	}, [audioEnabled, ttsMessages]);
+	}, [
+		audioEnabled,
+		dispatch,
+		generalVoiceIndex,
+		localVoiceList,
+		speak,
+		ttsMessages,
+	]);
 
 	return <div />;
 };

@@ -9,15 +9,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Location, useLocation, useNavigate } from 'react-router-dom';
 import { PATH_HOME, PATH_SETTINGS } from '@utils/constants';
-import { useDispatch, useSelector } from 'react-redux';
 import { setAudioEnabled } from '@features/settingsSlice';
 import Chatters from './Chatters';
-import { useAppSelector } from 'hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from 'hooks/reduxHooks';
 
 const SideMenu = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const audioEnabled = useAppSelector((state) => state.settings.audioEnabled);
 
 	const handleOptions = (pathname: Location['pathname']) => {

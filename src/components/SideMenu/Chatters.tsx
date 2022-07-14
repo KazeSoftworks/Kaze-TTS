@@ -1,5 +1,4 @@
 import React, { useEffect, useState, memo } from 'react';
-import { useSelector } from 'react-redux';
 import '@scss/Chatters.scss';
 import ChattersList from './ChattersList';
 import { useAppSelector } from 'hooks/reduxHooks';

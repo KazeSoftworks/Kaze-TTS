@@ -1,5 +1,5 @@
 import { ChatUserstate } from 'tmi.js';
-import { ChatEmote, Emote } from 'types';
+import { Emote } from 'types';
 
 const containsBBTVEmotes = (msg: string, dictionary: Emote) => {
 	if (!dictionary) {

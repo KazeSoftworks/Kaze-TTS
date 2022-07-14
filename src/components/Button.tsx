@@ -1,9 +1,5 @@
-import {
-	FontAwesomeIcon,
-	FontAwesomeIconProps,
-} from '@fortawesome/react-fontawesome';
-import React, { MouseEvent, MouseEventHandler, ReactNode } from 'react';
-import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { MouseEventHandler, ReactNode } from 'react';
 import '@scss/Button.scss';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';

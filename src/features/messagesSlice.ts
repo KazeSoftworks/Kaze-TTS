@@ -7,7 +7,7 @@ import {
 	parseBttvEmote,
 	parseChannelBttvEmote,
 } from '@utils/emoteHandler';
-import { ChatEmote, Emote, MessageType } from 'types';
+import { Emote, MessageType } from 'types';
 import { RootState } from './store';
 import { ApiEmote } from 'twitch';
 import { BTTVChannelEmoteRequest } from 'bttv';

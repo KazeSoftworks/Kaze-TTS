@@ -1,7 +1,5 @@
 import React, { memo, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 import { getTwitchEmoteUrl, getBttvEmoteUrl } from '@utils/emoteHandler';
-import { useSelector } from 'react-redux';
 import '@scss/Message.scss';
 import { formatTime } from '@utils/messageHandler';
 import { useAppSelector } from 'hooks/reduxHooks';

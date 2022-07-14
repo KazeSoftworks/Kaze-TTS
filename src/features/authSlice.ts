@@ -66,14 +66,14 @@ export const authSlice = createSlice({
 			state.userId = action.payload.user_id;
 			state.username = action.payload.login;
 		});
-		builder.addCase(validateToken.rejected, (state, action) => {
+		builder.addCase(validateToken.rejected, (state) => {
 			state.isAuthenticated = false;
 			state.isLoadingValidate = false;
 			state.username = '';
 			state.userId = '';
 			state.token = '';
 		});
-		builder.addCase(validateToken.pending, (state, action) => {
+		builder.addCase(validateToken.pending, (state) => {
 			state.isLoadingValidate = true;
 		});
 

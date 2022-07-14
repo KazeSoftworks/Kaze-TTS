@@ -1,6 +1,6 @@
 import { BTTVChannelEmoteRequest, BTTVEmote } from 'bttv';
 import { ApiEmote } from 'twitch';
-import { ChatEmote, Emote } from 'types';
+import { Emote } from 'types';
 
 const getTwitchEmoteUrl = (emoteId: string) => {
 	return `https://static-cdn.jtvnw.net/emoticons/v2/${emoteId}/default/dark/3.0`;

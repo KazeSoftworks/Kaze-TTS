@@ -67,7 +67,7 @@ const ClientEngine = ({ username, token }: ClientEngineProps) => {
 				dispatch(addChatter(parseTwitchMessage({ tags })));
 			}
 		});
-	}, [dispatch]);
+	}, [client, dispatch, username]);
 
 	return null;
 };
