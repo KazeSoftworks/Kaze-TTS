@@ -8,21 +8,29 @@ import { shiftTTSMessage } from '@features/messagesSlice';
 import React, { useEffect, useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import store from '@features/store';
+import { useAppSelector } from '@/hooks/reduxHooks';
 
 const AudioEngine = () => {
 	const synth = window.speechSynthesis;
 	const dispatch = useDispatch();
-	const generalVoiceIndex = useSelector(
+	const generalVoiceIndex = useAppSelector(
 		(state) => state.settings.generalVoiceIndex
 	);
-	const [localVoiceList, setLocalVoiceList] = useState([]);
-	const audioEnabled = useSelector((state) => state.settings.audioEnabled);
-	const ttsMessages = useSelector((state) => state.messages.ttsMessages);
+	const [localVoiceList, setLocalVoiceList] = useState<SpeechSynthesisVoice[]>(
+		[]
+	);
+	const audioEnabled = useAppSelector((state) => state.settings.audioEnabled);
+	const ttsMessages = useAppSelector((state) => state.messages.ttsMessages);
 
-	const speak = async (text, voice, lang, rate, pitch) => {
+	const speak = async (
+		text: string,
+		voice: SpeechSynthesisVoice,
+		rate: number,
+		pitch: number
+	) => {
 		const utterance = new SpeechSynthesisUtterance(text);
 		utterance.voice = voice;
-		utterance.lang = lang;
+		utterance.lang = voice.lang;
 		utterance.rate = rate;
 		utterance.pitch = pitch;
 		utterance.volume = 1;
@@ -57,7 +65,7 @@ const AudioEngine = () => {
 	}, [audioEnabled]);
 
 	useEffect(() => {
-		if (audioEnabled && ttsMessages.length > 0) {
+		if (audioEnabled && ttsMessages.length > 0 && generalVoiceIndex) {
 			const voice = localVoiceList[generalVoiceIndex];
 			const message = ttsMessages[0];
 			const messageTTS = `${message.username} dice ${message.text}`;
@@ -80,22 +88,22 @@ const AudioEngine = () => {
 			);
 			if (message.broadcaster) {
 				if (speakBroadcaster) {
-					speak(messageTTS, voice, 1, 1, 1).then(() => {});
+					speak(messageTTS, voice, 1, 1).then(() => {});
 				}
 			} else if (message.mod) {
 				if (speakModerator) {
-					speak(messageTTS, voice, 1, 1, 1).then(() => {});
+					speak(messageTTS, voice, 1, 1).then(() => {});
 				}
 			} else if (message.vip) {
 				if (speakVip) {
-					speak(messageTTS, voice, 1, 1, 1).then(() => {});
+					speak(messageTTS, voice, 1, 1).then(() => {});
 				}
 			} else if (message.subscriber) {
 				if (speakSubscriber) {
-					speak(messageTTS, voice, 1, 1, 1).then(() => {});
+					speak(messageTTS, voice, 1, 1).then(() => {});
 				}
 			} else if (speakChat) {
-				speak(messageTTS, voice, 1, 1, 1).then(() => {});
+				speak(messageTTS, voice, 1, 1).then(() => {});
 			}
 		}
 	}, [audioEnabled, ttsMessages]);

@@ -10,17 +10,24 @@ import tmiJs from 'tmi.js';
 import store from '@features/store';
 import { parseTwitchMessage } from '@utils/messageHandler';
 
-const ClientEngine = ({ username, token }) => {
+interface ClientEngineProps {
+	username: string;
+	token: string;
+}
+const ClientEngine = ({ username, token }: ClientEngineProps) => {
 	const dispatch = useDispatch();
 
 	const client = new tmiJs.Client({
-		options: { skipUpdatingEmotesets: true, debug: true },
+		options: {
+			skipUpdatingEmotesets: true,
+			messagesLogLevel: 'info',
+			debug: true,
+		},
 		identity: {
 			username,
 			password: token,
 		},
 		channels: [username],
-		messagesLogLevel: 'info',
 	});
 
 	useEffect(() => {
