@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import tmiJs from 'tmi.js';
 import store from '@features/store';
-import { parseTwitchMessage } from '@utils/messageHandler';
+import { parseTags } from '@utils/messageHandler';
 
 interface ClientEngineProps {
 	username: string;
@@ -64,7 +64,7 @@ const ClientEngine = ({ username, token }: ClientEngineProps) => {
 			}
 			dispatch(addMessage({ tags, message }));
 			if (tags.username !== username) {
-				dispatch(addChatter(parseTwitchMessage({ tags })));
+				dispatch(addChatter(parseTags(tags)));
 			}
 		});
 	}, [client, dispatch, username]);

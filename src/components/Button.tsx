@@ -5,12 +5,12 @@ import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 interface ButtonProps {
-	onClick: MouseEventHandler<HTMLButtonElement>;
-	className: string;
-	children: ReactNode;
-	startIcon: IconProp;
-	endIcon: IconProp;
-	isLoading: boolean;
+	onClick?: MouseEventHandler<HTMLButtonElement>;
+	className?: string;
+	children?: ReactNode;
+	startIcon?: IconProp;
+	endIcon?: IconProp;
+	isLoading?: boolean;
 }
 
 const Button = ({

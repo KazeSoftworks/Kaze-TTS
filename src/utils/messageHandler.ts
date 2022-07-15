@@ -113,4 +113,24 @@ const formatTime = (ts: string) => {
 	const time = `${date}/${month}/${year} ${hour}:${min}:${sec}`;
 	return time;
 };
+
+export const parseTags = (tags: ChatUserstate) => {
+	const {
+		badges,
+		'display-name': displayName,
+		mod,
+		subscriber,
+		username,
+	} = tags;
+
+	return {
+		displayName,
+		mod,
+		subscriber,
+		username,
+		vip: badges ? !!badges.vip : false,
+		broadcaster: badges ? !!badges.broadcaster : false,
+	};
+};
+
 export { containsBBTVEmotes, parseTwitchMessage, formatTime };
