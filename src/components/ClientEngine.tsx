@@ -4,7 +4,7 @@ import {
 	removeChatter,
 	setLoadingChat,
 } from '@features/twichSlice';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import tmiJs from 'tmi.js';
 import store from '@features/store';
@@ -17,18 +17,22 @@ interface ClientEngineProps {
 const ClientEngine = ({ username, token }: ClientEngineProps) => {
 	const dispatch = useDispatch();
 
-	const client = new tmiJs.Client({
-		options: {
-			skipUpdatingEmotesets: true,
-			messagesLogLevel: 'info',
-			debug: true,
-		},
-		identity: {
-			username,
-			password: token,
-		},
-		channels: [username],
-	});
+	const client = useMemo(
+		() =>
+			new tmiJs.Client({
+				options: {
+					skipUpdatingEmotesets: true,
+					messagesLogLevel: 'info',
+					debug: true,
+				},
+				identity: {
+					username,
+					password: token,
+				},
+				channels: [username],
+			}),
+		[token, username]
+	);
 
 	useEffect(() => {
 		dispatch(setLoadingChat(true));

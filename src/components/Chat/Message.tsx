@@ -63,7 +63,7 @@ const Message = ({ message }: MessageProps) => {
 	};
 
 	const getMessage = () => {
-		const textComponent: ReactElement[] = [];
+		const textComponent: (ReactElement | string)[] = [];
 		const textArray = message.text.split(/(\s+)/);
 		textArray.forEach((word, imageIndex) => {
 			if (message.emotes && message.emotes[word]) {
@@ -87,7 +87,7 @@ const Message = ({ message }: MessageProps) => {
 					/>
 				);
 			} else {
-				textComponent.push(<span>{word}</span>);
+				textComponent.push(word);
 			}
 		});
 		return textComponent;

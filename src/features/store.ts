@@ -18,7 +18,7 @@ const reHydrateStore = () => {
 	const authData = localStorage.getItem('auth');
 	if (authData) {
 		const data = JSON.parse(authData);
-		return { auth: { ...data, ...initialState } };
+		return { auth: { ...initialState, ...data } };
 	}
 	return {};
 };

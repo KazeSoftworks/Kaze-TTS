@@ -5,7 +5,7 @@ import {
 	setVoices,
 } from '@features/settingsSlice';
 import { shiftTTSMessage } from '@features/messagesSlice';
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo, useMemo } from 'react';
 import store from '@features/store';
 import { useAppSelector, useAppDispatch } from '@hooks/reduxHooks';
 
@@ -21,23 +21,24 @@ const AudioEngine = () => {
 	const audioEnabled = useAppSelector((state) => state.settings.audioEnabled);
 	const ttsMessages = useAppSelector((state) => state.messages.ttsMessages);
 
-	const speak = async (
-		text: string,
-		voice: SpeechSynthesisVoice,
-		rate: number,
-		pitch: number
-	) => {
-		const utterance = new SpeechSynthesisUtterance(text);
-		utterance.voice = voice;
-		utterance.lang = voice.lang;
-		utterance.rate = rate;
-		utterance.pitch = pitch;
-		utterance.volume = 1;
-		await new Promise((resolve) => {
-			utterance.onend = resolve;
-			synth.speak(utterance);
-		});
-	};
+	const speak = useMemo(
+		() =>
+			async (
+				text: string,
+				voice: SpeechSynthesisVoice,
+				rate: number,
+				pitch: number
+			) => {
+				const utterance = new SpeechSynthesisUtterance(text);
+				utterance.voice = voice;
+				utterance.lang = voice.lang;
+				utterance.rate = rate;
+				utterance.pitch = pitch;
+				utterance.volume = 1;
+				synth.speak(utterance);
+			},
+		[synth]
+	);
 
 	useEffect(() => {
 		const voicesList = synth.getVoices();
@@ -64,7 +65,7 @@ const AudioEngine = () => {
 	}, [audioEnabled, synth]);
 
 	useEffect(() => {
-		if (audioEnabled && ttsMessages.length > 0 && generalVoiceIndex) {
+		if (audioEnabled && ttsMessages.length > 0 && generalVoiceIndex !== null) {
 			const voice = localVoiceList[generalVoiceIndex];
 			const message = ttsMessages[0];
 			const messageTTS = `${message.username} dice ${message.text}`;
